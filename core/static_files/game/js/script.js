@@ -56,12 +56,9 @@ function renderBoard() {
 
 function handleCellClick(row, col) {
     if (!isValidMove(row, col, currentPlayer)) {
-        // If it's hard mode, highlight the correct moves before declaring the opposite player as winner
+        // If it's hard mode, declare the opposite player as winner immediately
         if (selectedDifficulty === 'hard') {
-            highlightValidMoves(currentPlayer === 'black' ? 'white' : 'black'); // Highlight valid moves for the opposite player
-            setTimeout(() => {
-                declareWinner(currentPlayer === 'black' ? 'white' : 'black');
-            }, 500); // Delay for 2 seconds before declaring the winner
+            declareWinner(currentPlayer === 'black' ? 'white' : 'black');
             return;
         }
         return; // Otherwise, just return for invalid move
@@ -75,30 +72,6 @@ function handleCellClick(row, col) {
 
     // Check if the game is over after the move
     checkGameOver(); // Check for win/lose/draw conditions
-}
-
-function highlightValidMoves(player) {
-    const validMoves = [];
-    for (let row = 0; row < 8; row++) {
-        for (let col = 0; col < 8; col++) {
-            if (isValidMove(row, col, player)) {
-                validMoves.push({ row, col });
-            }
-        }
-    }
-
-    validMoves.forEach(({ row, col }) => {
-        const cell = boardElement.children[row * 8 + col];
-        cell.classList.add('highlight'); // Add highlight class
-    });
-
-    // Remove highlights after 1 second
-    setTimeout(() => {
-        validMoves.forEach(({ row, col }) => {
-            const cell = boardElement.children[row * 8 + col];
-            cell.classList.remove('highlight'); // Remove highlight class
-        });
-    }, 1000);
 }
 
 function startTimer() {
@@ -252,8 +225,34 @@ initializeBoard();
 // Handle difficulty button clicks
 difficultyButtons.forEach(button => {
     button.addEventListener('click', () => {
-        selectedDifficulty = button.id; // Get the selected difficulty
-        resetTimers(); // Reset timers when a difficulty is selected
-        alert(`Difficulty set to ${selectedDifficulty.charAt(0).toUpperCase() + selectedDifficulty.slice(1)}`);
+        selectedDifficulty = button.id; // Set selected difficulty
+        resetGame(); // Restart game with new difficulty
+    });
+});
+
+// Switch player function
+function switchPlayer() {
+    clearTimeout(moveTimeout); // Clear the previous timeout for the current player
+    currentPlayer = currentPlayer === 'black' ? 'white' : 'black'; // Switch the current player
+    clearInterval(timerInterval); // Stop the previous timer
+
+    // Update the player piece display
+    const playerPiece = document.getElementById('player-piece');
+    playerPiece.className = `cell ${currentPlayer}`; // Change the class based on current player
+
+    startTimer(); // Start the timer for the new current player
+    renderBoard(); // Re-render the board to reflect the current player
+}
+// Handle difficulty button clicks
+difficultyButtons.forEach(button => {
+    button.addEventListener('click', () => {
+        // Remove the active class from all buttons
+        difficultyButtons.forEach(btn => btn.classList.remove('active'));
+
+        // Add the active class to the clicked button
+        button.classList.add('active');
+
+        selectedDifficulty = button.id; // Set selected difficulty
+        resetGame(); // Restart game with new difficulty
     });
 });
