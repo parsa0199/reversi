@@ -58,7 +58,7 @@ function handleCellClick(row, col) {
     if (!isValidMove(row, col, currentPlayer)) {
         // If it's hard mode, declare the opposite player as winner immediately
         if (selectedDifficulty === 'hard') {
-            declareWinner(currentPlayer === 'black' ? 'white' : 'black');
+            declareWinner(currentPlayer === 'black' ? 'white' : 'black', 'Invalid move');
             return;
         }
         return; // Otherwise, just return for invalid move
@@ -93,7 +93,7 @@ function startTimer() {
 
     // Start move timeout based on selected difficulty
     moveTimeout = setTimeout(() => {
-        declareWinner(currentPlayer === 'black' ? 'white' : 'black'); // Declare the opposite player as winner
+        declareWinner(currentPlayer === 'black' ? 'white' : 'black', 'Timeout');
     }, difficultyTimeouts[selectedDifficulty] * 1000); // Timeout based on selected difficulty
 }
 
@@ -116,10 +116,10 @@ function formatTime(seconds) {
     return `${minutes}:${secs}`;
 }
 
-function declareWinner(winner) {
+function declareWinner(winner, reason) {
     clearInterval(timerInterval);
     clearTimeout(moveTimeout);
-    alert(`${winner.charAt(0).toUpperCase() + winner.slice(1)} Player Wins!`);
+    alert(`${winner.charAt(0).toUpperCase() + winner.slice(1)} Player Wins! Reason: ${reason}`);
     resetGame();
 }
 
@@ -138,9 +138,9 @@ function checkGameOver() {
         alert("It's a draw!");
         resetGame();
     } else if (!blackHasMove) {
-        declareWinner('white');
+        declareWinner('white', 'No valid moves for Black');
     } else if (!whiteHasMove) {
-        declareWinner('black');
+        declareWinner('black', 'No valid moves for White');
     }
 }
 
@@ -243,6 +243,7 @@ function switchPlayer() {
     startTimer(); // Start the timer for the new current player
     renderBoard(); // Re-render the board to reflect the current player
 }
+
 // Handle difficulty button clicks
 difficultyButtons.forEach(button => {
     button.addEventListener('click', () => {
