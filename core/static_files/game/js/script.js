@@ -12,9 +12,9 @@ let timerInterval;
 let moveTimeout;
 let moveCount = 0; // Counter for moves
 const difficultyButtons = document.querySelectorAll('button[id]');
-let selectedDifficulty = 'medium'; // Default difficulty
+let selectedDifficulty = null; // No difficulty selected initially
 const difficultyTimeouts = {
-    easy: 40,   // 20 seconds
+    easy: 40,   // 40 seconds
     medium: 15, // 15 seconds
     hard: 10    // 10 seconds
 };
@@ -55,7 +55,7 @@ function renderBoard() {
 }
 
 function handleCellClick(row, col) {
-    if (!isValidMove(row, col)) {
+    if (!isValidMove(row, col, currentPlayer)) {
         // If it's hard mode, declare the opposite player as winner immediately
         if (selectedDifficulty === 'hard') {
             declareWinner(currentPlayer === 'black' ? 'white' : 'black');
@@ -69,17 +69,14 @@ function handleCellClick(row, col) {
     moveCountElement.textContent = moveCount; // Update move count display
     flipPieces(row, col);
     switchPlayer();
-}
 
-function switchPlayer() {
-    clearTimeout(moveTimeout); // Clear the previous timeout
-    currentPlayer = currentPlayer === 'black' ? 'white' : 'black';
-    clearInterval(timerInterval);
-    startTimer();
-    renderBoard();
+    // Check if the game is over after the move
+    checkGameOver(); // Check for win/lose/draw conditions
 }
 
 function startTimer() {
+    if (!selectedDifficulty) return; // Prevent starting timer if difficulty not selected
+
     const currentTimeElement = currentPlayer === 'black' ? blackTimeElement : whiteTimeElement;
     let timeCounter = currentPlayer === 'black' ? blackTime : whiteTime;
 
@@ -107,7 +104,10 @@ function resetTimers() {
     whiteTimeElement.textContent = '00:00';
     clearInterval(timerInterval);
     clearTimeout(moveTimeout);
-    startTimer();
+
+    if (selectedDifficulty) { // Only start timer if a difficulty is selected
+        startTimer();
+    }
 }
 
 function formatTime(seconds) {
@@ -129,7 +129,35 @@ function resetGame() {
     initializeBoard();
 }
 
-function isValidMove(row, col) {
+function checkGameOver() {
+    // Check if both players have valid moves
+    const blackHasMove = hasValidMoves('black');
+    const whiteHasMove = hasValidMoves('white');
+
+    if (!blackHasMove && !whiteHasMove) {
+        alert("It's a draw!");
+        resetGame();
+    } else if (!blackHasMove) {
+        declareWinner('white');
+    } else if (!whiteHasMove) {
+        declareWinner('black');
+    }
+}
+
+// Check if a player has any valid moves
+function hasValidMoves(player) {
+    for (let row = 0; row < 8; row++) {
+        for (let col = 0; col < 8; col++) {
+            if (isValidMove(row, col, player)) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+// Check if a move is valid
+function isValidMove(row, col, player) {
     // Check if the cell is empty
     if (board[row][col]) return false;
 
@@ -140,20 +168,21 @@ function isValidMove(row, col) {
     ];
 
     for (const [dx, dy] of directions) {
-        if (canFlip(row, col, dx, dy)) return true;
+        if (canFlip(row, col, dx, dy, player)) return true;
     }
 
     return false;
 }
 
-function canFlip(row, col, dx, dy) {
+// Check if a piece can be flipped in a given direction
+function canFlip(row, col, dx, dy, player) {
     let x = row + dx;
     let y = col + dy;
     let foundOpponent = false;
 
     while (x >= 0 && x < 8 && y >= 0 && y < 8) {
         if (!board[x][y]) break; // Empty cell found
-        if (board[x][y] === currentPlayer) return foundOpponent; // Found the same player
+        if (board[x][y] === player) return foundOpponent; // Found the same player
 
         foundOpponent = true; // Found an opponent piece
         x += dx;
@@ -163,6 +192,7 @@ function canFlip(row, col, dx, dy) {
     return false; // No valid flip found
 }
 
+// Flip pieces in the specified direction
 function flipPieces(row, col) {
     const directions = [
         [-1, 0], [1, 0], [0, -1], [0, 1],
@@ -170,12 +200,13 @@ function flipPieces(row, col) {
     ];
 
     for (const [dx, dy] of directions) {
-        if (canFlip(row, col, dx, dy)) {
+        if (canFlip(row, col, dx, dy, currentPlayer)) {
             flipDirection(row, col, dx, dy);
         }
     }
 }
 
+// Flip pieces in the specified direction
 function flipDirection(row, col, dx, dy) {
     let x = row + dx;
     let y = col + dy;
@@ -194,6 +225,33 @@ initializeBoard();
 // Handle difficulty button clicks
 difficultyButtons.forEach(button => {
     button.addEventListener('click', () => {
+        selectedDifficulty = button.id; // Set selected difficulty
+        resetGame(); // Restart game with new difficulty
+    });
+});
+
+// Switch player function
+function switchPlayer() {
+    clearTimeout(moveTimeout); // Clear the previous timeout for the current player
+    currentPlayer = currentPlayer === 'black' ? 'white' : 'black'; // Switch the current player
+    clearInterval(timerInterval); // Stop the previous timer
+
+    // Update the player piece display
+    const playerPiece = document.getElementById('player-piece');
+    playerPiece.className = `cell ${currentPlayer}`; // Change the class based on current player
+
+    startTimer(); // Start the timer for the new current player
+    renderBoard(); // Re-render the board to reflect the current player
+}
+// Handle difficulty button clicks
+difficultyButtons.forEach(button => {
+    button.addEventListener('click', () => {
+        // Remove the active class from all buttons
+        difficultyButtons.forEach(btn => btn.classList.remove('active'));
+
+        // Add the active class to the clicked button
+        button.classList.add('active');
+
         selectedDifficulty = button.id; // Set selected difficulty
         resetGame(); // Restart game with new difficulty
     });

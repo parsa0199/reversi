@@ -7,7 +7,7 @@
     <title>Reversi Game</title>
     <link rel="stylesheet" href="{% static 'game/css/styles.css' %}">
 </head>
-<body>
+<body class="">
 <header>
     <nav>
         <a href="{% url 'game:game_list' %}">Home</a>
@@ -32,7 +32,12 @@
             <span>White Player: </span>
             <span id="white-time">00:00</span>
         </div>
-        <p>Current Player: <span id="current-player">Black</span></p>
+        <div class="justify-content-center d-flex">
+                    <p>Current Player: <span id="current-player">
+    <div id="player-piece" class="cell black"></div>
+        </span></p>
+        </div>
+
         <p>Move Count: <span id="move-count">0</span></p>
 
     </div>
