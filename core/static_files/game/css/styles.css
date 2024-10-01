@@ -71,8 +71,14 @@ h1 {
     border: 4px solid rgba(97, 218, 251, 0.8);
     border-radius: 12px;
     padding: 1em;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Added transition */
 }
+
+#board:hover {
+    background-color: rgba(255, 255, 255, 0.05); /* Lightens background on hover */
+}
+
 /* Responsive styles for mobile devices */
 @media (max-width: 768px) { /* You can adjust this breakpoint as needed */
     #board {
@@ -88,21 +94,40 @@ h1 {
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    transition: background-color 0.3s, transform 0.2s, box-shadow 0.2s;
+    transition: background-color 0.3s, transform 0.2s, box-shadow 0.2s, filter 0.2s; /* Added filter */
     border-radius: 8px;
+    position: relative; /* Allow absolute positioning of pseudo-elements */
+}
+
+.cell::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.1); /* Subtle overlay */
+    border-radius: 8px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.cell:hover::before {
+    opacity: 1; /* Show overlay on hover */
 }
 
 .cell:hover {
-    background-color: rgba(97, 218, 251, 0.2);
-    box-shadow: 0 4px 10px rgba(97, 218, 251, 0.5);
+    background-color: rgba(97, 218, 251, 0.3); /* Brighter on hover */
+    filter: brightness(1.1); /* Slight brightness effect */
+    box-shadow: 0 8px 20px rgba(97, 218, 251, 0.7); /* Enhanced shadow */
 }
 
 .cell.black {
     background: radial-gradient(circle at 30% 30%, #333, #000);
     border-radius: 50%;
     box-shadow:
-        0 4px 15px rgba(0, 0, 0, 0.8),  /* Strong shadow */
-        inset 0 -2px 5px rgba(255, 255, 255, 0.2); /* Light inner shadow */
+        0 8px 20px rgba(0, 0, 0, 0.8),  /* Strong shadow */
+        inset 0 -3px 5px rgba(255, 255, 255, 0.1); /* Light inner shadow */
     border: 2px solid #222; /* Slight border to distinguish the edge */
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
@@ -111,8 +136,8 @@ h1 {
     background: radial-gradient(circle at 70% 70%, #fff, #ddd);
     border-radius: 50%;
     box-shadow:
-        0 4px 15px rgba(255, 255, 255, 0.8), /* Strong shadow */
-        inset 0 2px 5px rgba(0, 0, 0, 0.2); /* Light inner shadow */
+        0 8px 20px rgba(255, 255, 255, 0.8), /* Strong shadow */
+        inset 0 2px 5px rgba(0, 0, 0, 0.1); /* Light inner shadow */
     border: 2px solid #eee; /* Subtle border */
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
@@ -120,15 +145,33 @@ h1 {
 .cell.black:hover, .cell.white:hover {
     transform: scale(1.1); /* Slight zoom effect on hover */
     box-shadow:
-        0 8px 20px rgba(0, 0, 0, 0.9),  /* More prominent shadow */
+        0 12px 30px rgba(0, 0, 0, 0.9),  /* More prominent shadow */
         inset 0 0 10px rgba(255, 255, 255, 0.3); /* Stronger inner glow */
 }
 
 .cell.black:active, .cell.white:active {
     transform: scale(0.95); /* Shrink slightly on click */
     box-shadow:
-        0 2px 10px rgba(0, 0, 0, 0.6),  /* Reduced shadow */
+        0 4px 20px rgba(0, 0, 0, 0.6),  /* Reduced shadow */
         inset 0 0 15px rgba(255, 255, 255, 0.4); /* Strong inner glow */
+}
+
+/* Add keyframe animations for a pulsating effect */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Apply the animation on hover */
+.cell:hover {
+    animation: pulse 0.6s infinite; /* Pulsating effect */
 }
 
 
