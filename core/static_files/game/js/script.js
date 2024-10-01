@@ -56,12 +56,14 @@ function renderBoard() {
 
 function handleCellClick(row, col) {
     if (!isValidMove(row, col, currentPlayer)) {
-        // If it's hard mode, declare the opposite player as winner immediately
+        // If it's hard mode, highlight all valid moves and then declare the opposite player as winner
         if (selectedDifficulty === 'hard') {
-            declareWinner(currentPlayer === 'black' ? 'white' : 'black', 'Invalid move');
-            return;
+            highlightAllValidMoves(); // Highlight all valid moves in green
+            setTimeout(() => {
+                declareWinner(currentPlayer === 'black' ? 'white' : 'black', 'Invalid move');
+            }, 1000); // Show valid moves for 1 second before declaring the winner
         }
-        return; // Otherwise, just return for invalid move
+        return; // Invalid move, return early
     }
 
     board[row][col] = currentPlayer;
@@ -73,6 +75,32 @@ function handleCellClick(row, col) {
     // Check if the game is over after the move
     checkGameOver(); // Check for win/lose/draw conditions
 }
+
+function highlightAllValidMoves() {
+    const cells = boardElement.querySelectorAll('.cell');
+    for (let row = 0; row < 8; row++) {
+        for (let col = 0; col < 8; col++) {
+            if (isValidMove(row, col, currentPlayer)) {
+                const correctCell = cells[row * 8 + col]; // Get the correct cell in the grid
+                correctCell.classList.add('correct-move'); // Add a green highlight
+            }
+        }
+    }
+
+    // Remove the highlight after 1 second
+    setTimeout(() => {
+        cells.forEach(cell => cell.classList.remove('correct-move'));
+    }, 500);
+}
+
+// Add CSS for the highlighted correct move
+const style = document.createElement('style');
+style.innerHTML = `
+    .correct-move {
+        background-color: green !important;
+    }
+`;
+document.head.appendChild(style);
 
 function startTimer() {
     if (!selectedDifficulty) return; // Prevent starting timer if difficulty not selected
