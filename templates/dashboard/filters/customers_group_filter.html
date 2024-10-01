@@ -1,0 +1,193 @@
+{% comment %} Search Filtering {% endcomment %}
+<div class="collapse" id="ProSearch" style="">
+    <h5 class="text-center pt-4">
+        <i class="feather icon-search"></i>
+        جست‌وجو:</h5>
+    <div class="card-body px-2">
+        <form method='GET' action=".">
+            <input type="hidden" name="filtering" value="True">
+            <div class="row">
+                <div class="col-lg-2 col-md-4 col-12">
+                    <div class="form-group">
+                        <label for="customer_id">شناسه مشتری</label>
+                        <input type="number" name="customer_id" class="form-control" id="customer_id" dir="ltr"
+                            value={{ request.GET.customer_id }}>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-4 col-12">
+                    <div class="form-group">
+                        <label for="name">نام نام خانوادگی</label>
+                        <input type="text" name="full_name" class="form-control" id="name"
+                               value="{{ request.GET.full_name }}">
+                    </div>
+                </div>
+
+                <div class="col-lg-2 col-md-4 col-12">
+                    <div class="form-group">
+                        <label for="phone">موبایل</label>
+                        <input type="text" name="phone" dir="ltr" class="form-control" id="phone"
+                               value="{{ request.GET.phone }}">
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-4 col-12">
+                    <div class="form-group">
+                        <label for="group_num">نام گروه</label>
+                        <select class="js-example-basic-single" id="group_num" name="group_num">
+                            <option></option>
+                            {% for item in customer_groups %}
+                            <option value="{{ item.group_num }}"
+                            {% if item.group_num|stringformat:"i" == request.GET.group_num %}selected{% endif %}
+                            >{{ item.group_name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-lg-2 col-md-4 col-12">
+                    <div class="form-group">
+                        <label for="paginate_by">نمایش در هر صفحه</label>
+                        <select class="js-example-basic-single" id="paginate_by" name="paginate_by">
+                            <option></option>
+                            <option {% if request.GET.paginate_by == "10" %}selected{% endif %} value=10>10</option>
+                            <option {% if request.GET.paginate_by == "20" %}selected{% endif %} value=20>20</option>
+                            <option {% if request.GET.paginate_by == "50" %}selected{% endif %} value=50>50</option>
+                            <option {% if request.GET.paginate_by == "100" %}selected{% endif %} value=100>100</option>
+                            <option {% if request.GET.paginate_by == "200" %}selected{% endif %} value=200>200</option>
+                            <option {% if request.GET.paginate_by == "500" %}selected{% endif %} value=500>500</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <button type="submit" class="btn btn-success d-flex">جست‌وجو کنید</button>
+                </div>
+
+            </div>
+    </div>
+</div>
+
+<div class="collapse" id="ProFilter" style="">
+    <h5 class="text-center pt-4">
+        <i class="feather icon-filter"></i>
+        فیلتر:</h5>
+    <div class="card-body px-2">
+        <form method='GET' action=".">
+            <input type="hidden" name="filtering" value="True">
+            <div class="row justify-content-center">
+                <div class="col-lg-3 col-md-4 col-12">
+                    <div class="form-group shadow-sm py-4 px-2 rounded">
+                        <label class="d-flex justify-content-center font-weight-bold">مجموع خرید</label>
+                        <div class="price_filter" dir="ltr">
+								<label class="price_filter__label">
+									<input type="text" name="total_price_min"
+										class="price_filter__input price_filter__input0">
+								</label>
+
+								<label class="price_filter__label">
+									<input type="text" name="total_price_max"
+										class="price_filter__input price_filter__input0">
+								</label>
+
+								<div id="sliderPrice0" class="sliderPrice price_filter__slider-price"
+									data-min="{{ cg_prices.total_price__min }}"
+									data-max="{{ cg_prices.total_price__max }}" data-step="10000">
+								</div>
+								<span class="d-none"
+									id="price_filtered_min_0">{{ filtered_total_price_min|default:cg_prices.total_price__min }}</span>
+								<span class="d-none"
+									id="price_filtered_max_0">{{ filtered_total_price_max|default:cg_prices.total_price__max }}</span>
+							</div>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-4 col-12">
+                    <div class="form-group shadow-sm py-4 px-2 rounded">
+                        <label class="d-flex justify-content-center font-weight-bold">میانگین مبلغ هر فاکتور</label>
+                        <div class="price_filter" dir="ltr">
+								<label class="price_filter__label">
+									<input type="text" name="per_order_price_min"
+										class="price_filter__input price_filter__input1">
+								</label>
+
+								<label class="price_filter__label">
+									<input type="text" name="per_order_price_max"
+										class="price_filter__input price_filter__input1">
+								</label>
+
+								<div id="sliderPrice1" class="sliderPrice price_filter__slider-price"
+									data-min="{{ cg_prices.per_order_price__min }}"
+									data-max="{{ cg_prices.per_order_price__max }}" data-step="10000">
+								</div>
+								<span class="d-none"
+									id="price_filtered_min_1">{{ filtered_per_order_price_min|default:cg_prices.per_order_price__min }}</span>
+								<span class="d-none"
+									id="price_filtered_max_1">{{ filtered_per_order_price_max|default:cg_prices.per_order_price__max }}</span>
+							</div>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-4 col-12">
+                    <div class="form-group shadow-sm py-4 px-2 rounded">
+                        <label class="d-flex justify-content-center font-weight-bold">میانگین مبلغ هر خط فاکتور</label>
+                        <div class="price_filter" dir="ltr">
+								<label class="price_filter__label">
+									<input type="text" name="per_price_min"
+										class="price_filter__input price_filter__input2">
+								</label>
+
+								<label class="price_filter__label">
+									<input type="text" name="per_price_max"
+										class="price_filter__input price_filter__input2">
+								</label>
+
+								<div id="sliderPrice2" class="sliderPrice price_filter__slider-price"
+									data-min="{{ cg_prices.per_price__min }}"
+									data-max="{{ cg_prices.per_price__max }}" data-step="10000">
+								</div>
+								<span class="d-none"
+									id="price_filtered_min_2">{{ filtered_per_price_min|default:cg_prices.per_price__min }}</span>
+								<span class="d-none"
+									id="price_filtered_max_2">{{ filtered_per_price_max|default:cg_prices.per_price__max }}</span>
+							</div>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-4 col-12">
+                    <div class="form-group shadow-sm py-4 px-2 rounded">
+                        <label class="d-flex justify-content-center font-weight-bold" for="product_prices2">مجموع تخفیف دریافتی</label>
+                        <div class="price_filter" dir="ltr">
+								<label class="price_filter__label">
+									<input type="text" name="total_coupon_min"
+										class="price_filter__input price_filter__input3">
+								</label>
+
+								<label class="price_filter__label">
+									<input type="text" name="total_coupon_max"
+										class="price_filter__input price_filter__input3">
+								</label>
+
+								<div id="sliderPrice3" class="sliderPrice price_filter__slider-price"
+									data-min="{{ cg_prices.total_coupon__min }}"
+									data-max="{{ cg_prices.total_coupon__max }}" data-step="10000">
+								</div>
+								<span class="d-none"
+									id="price_filtered_min_3">{{ filtered_total_coupon_min|default:cg_prices.total_coupon__min }}</span>
+								<span class="d-none"
+									id="price_filtered_max_3">{{ filtered_total_coupon_max|default:cg_prices.total_coupon__max }}</span>
+							</div>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <button type="submit" class="btn btn-dark d-flex mx-auto">فیلتر کنید</button>
+                </div>
+
+            </div>
+    </div>
+</div>
+
+{% comment %} Order Filtering {% endcomment %}
+{% include 'filters/ordering.html' %}
+</form>

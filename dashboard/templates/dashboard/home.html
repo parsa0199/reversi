@@ -1,0 +1,121 @@
+{% extends "dashboard/layouts/base.html" %}
+{% load static %}
+{% load humanize %}
+
+{% block title %}نمای کلی گزارشات{% endblock %}
+
+
+
+{% block stylesheets %}
+<link rel="stylesheet" href="{% static 'css/management/style.css' %}">
+<style>
+
+    #iran_map_chart {
+        width: 100%;
+        margin: 0 auto;
+    }
+    
+    .loading {
+        margin-top: 10em;
+        text-align: center;
+        color: gray;
+    }
+    
+</style>
+{% endblock stylesheets %}
+
+
+{% block breadcrumb %}
+{% endblock breadcrumb %}
+
+
+{% block content %}
+<div class="main-body">
+    <div class="page-wrapper">
+        <div class="row mt-2 pt-1">
+            <div class="col-12 col-md-6 col-lg-4">
+                <a href="#">
+                    <div class="card theme-bg2 bitcoin-wallet rounded-lg px-2 mb-2 mb-md-2">
+                        <div class="card-block py-2">
+                            <h5 class="text-white mb-2">کاربران سایت</h5>
+                            <h2 class="text-white mb-2 f-w-300">{{ customers_count|intcomma:False|default:0 }}</h2>
+                            <i class="feather icon-users f-70 text-white"></i>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-12 col-md-6 col-lg-4">
+                <a href="#">
+                    <div class="card bg-c-blue  bitcoin-wallet rounded-lg px-2 mb-2 mb-md-2">
+                        <div class="card-block py-2">
+                            <h5 class="text-white mb-2">محصولات</h5>
+                            <h2 class="text-white mb-2 f-w-300">{{ products_count|intcomma:False|default:0 }}</h2>
+                            <i class="feather icon-package f-70 text-white"></i>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-12 col-md-6 col-lg-4">
+                <a href="{% url "dashboard:orders" %}">
+                    <div class="card theme-bg bitcoin-wallet rounded-lg px-2 mb-2 mb-md-2">
+                        <div class="card-block py-2">
+                            <h5 class="text-white mb-2">سفارشات</h5>
+                            <h2 class="text-white mb-2 f-w-300">{{ orders_count|intcomma:False|default:0 }}</h2>
+                            <i class="feather icon-shopping-cart f-70 text-white"></i>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <div class="row">
+
+            <div class="col-12 col-md-6 col-lg-6 my-3 align-self-start">
+                <div class="py-2 rounded-lg">
+                    <div id="customers_count_chart"></div>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-6 col-lg-6 my-3 align-self-start">
+                <div class="py-2 rounded-lg">
+                    <div id="top_products_chart"></div>
+                </div>
+            </div>
+
+            
+
+            <div class="col-12 col-md-6 col-lg-6 my-3 align-self-start">
+                <div class="py-2 rounded-lg">
+                    <div id="orders_amount_chart"></div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-6 my-3 align-self-start">
+                <div class="py-2 rounded-lg">
+                    <div id="orders_cost_chart"></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+</div>
+
+{% endblock content %}
+
+{% block javascripts %}
+
+<script src="https://code.highcharts.com/maps/highmaps.js"></script>
+<script src="{% static 'dashboard/js/custom-exporting.js' %}"></script>
+<script src="{% static 'dashboard/js/mapdata_ir_all.js' %}"></script>
+
+<script>
+    {% include 'dashboard/charts/top_products_chart.html' %}
+    {% comment %} {% include 'dashboard/charts/iran_map_chart.html' %}     {% endcomment %}
+    {% include 'dashboard/charts/orders_amount_chart.html' %}    
+    {% include 'dashboard/charts/orders_cost_chart.html' %}    
+    {% include 'dashboard/charts/customer_count_chart.html' %}
+</script>
+
+{% endblock javascripts %}

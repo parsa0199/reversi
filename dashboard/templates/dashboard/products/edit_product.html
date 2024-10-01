@@ -1,0 +1,27 @@
+<!-- Start of edit model -->
+<div class="modal fade" id="item_edit_{{ item.id }}" tabindex="-1" aria-labelledby="item_edit_title" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="question_edit_title">ویرایش {{ object_name_fa }}</h5>
+            </div>
+
+            <form action="{% url 'dashboard:update-product' item.pk %}"
+                  method="POST" enctype="multipart/form-data" novalidate>
+                {% if form.non_field_errors %}
+                    <div class="alert alert-danger">
+                        <ul class="errorlist">
+                            {% for error in form.non_field_errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
+                
+                {% csrf_token %}
+                {% include "dashboard/products/product_fields.html" %}
+            </form>
+        </div>
+    </div>
+</div>
+<!-- End of edit modal -->

@@ -1,0 +1,36 @@
+<div class="collapse" id="ProOrder" style="">
+    <h5 class="text-center pt-4">
+        <i class="feather icon-filter"></i>
+        مرتب‌سازی:</h5>
+    <div class="card-body px-2 pt-3 justify-content-center">
+        <div class="row justify-content-center">
+            <div class="col-lg-3 col-md-6 col-12">
+                <div class="form-group">
+                    <label for="order_by">ویژگی موردنظر</label>
+                    <select class="js-example-basic-single" id="order_by" name="order_by">
+                        <option></option>
+                        {% for key, value in model_fields.items %}
+                        <option {% if request.GET.order_by == key %}selected{% endif %} value="{{ key }}">
+                            {{ value }}</option>
+                        {% endfor %}
+
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-6 col-12">
+                <div class="form-group">
+                    <label for="ordering">نوع مرتب‌سازی</label>
+                    <select class="js-example-basic-single" id="ordering" name="ordering">
+                        <option></option>
+                        <option {% if request.GET.ordering == "asc" %}selected{% endif %} value="asc">صعودی</option>
+                        <option {% if request.GET.ordering == "desc" %}selected{% endif %} value="desc">نزولی</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <button type="submit" class="btn btn-primary d-flex mx-auto">مرتب کنید</button>
+            </div>
+        </div>
+    </div>
+</div>

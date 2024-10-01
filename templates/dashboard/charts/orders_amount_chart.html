@@ -1,0 +1,54 @@
+{% load dashboard_index %}
+Highcharts.chart('orders_amount_chart', {
+    {% include 'dashboard/charts/base_reports_chart.html' %}
+    title: {
+        text: "تعداد سفارشات روزانه",
+        y: 20,
+    },
+
+    colors: ['#3300CC'],
+    
+
+    subtitle: {
+        text: ''
+    },
+
+    yAxis: {
+        title: {
+            text: 'تعداد'
+        }
+    },
+
+    xAxis: {
+        categories: [
+            {% for date, cost in orders_amount.items %}
+            "{{ date|convert_to_jalali }}",
+            {% endfor %}
+        ],
+        reversed: true,
+
+        labels: {
+            style: {
+                direction: "rtl",
+            },
+            align: 'top',
+
+        },
+    },
+
+    tooltip: {
+        pointFormat: ' <b>{point.y}</b>',
+    },
+
+    series: [
+            {
+                name: "تعداد سفارشات",
+                data: [
+                    {% for date, cost in orders_amount.items %}
+                        {{ cost|floatformat:"0"  }},
+                    {% endfor %}
+                ]
+            },
+    ],
+
+});

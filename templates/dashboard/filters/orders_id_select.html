@@ -1,0 +1,7 @@
+<select class="js-example-basic-single" id="order_id" name="order_id">
+    <option></option>
+    {% for item in all_orders_id %}
+        <option {% if request.GET.order_id == order_id %}selected{% endif %}
+        value={{ item }}>{{ item }}</option>
+    {% endfor %}
+</select>

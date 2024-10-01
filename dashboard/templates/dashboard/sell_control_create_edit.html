@@ -1,0 +1,74 @@
+{% extends "dashboard/layouts/base.html" %}
+{% load static %}
+
+{% block title %}
+    {% if form.instance.pk %}
+        ویرایش وضعیت کنترل فروش  
+    {% else %}
+        تعیین وضعیت کنترل فروش
+    {% endif %}
+{% endblock title %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item"><a href="{{ request.path }}">کنترل فروش</a></li>
+{% endblock breadcrumb %}
+{% block content %}
+<div class="container-fluid">
+    <div class="card card-default">
+        <div class="card-header">
+            <h5>کنترل وضعیت فروش</h5>
+        </div>
+        <div class="card-body">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <form action="" method="POST" enctype="multipart/form-data" novalidate>
+                    {% csrf_token %}
+                    {% if form.errors %}
+                        {% for field in form %}
+                            {% for error in field.errors %}
+                                <div class="alert alert-danger">
+                                    <strong>{{ field.label }}:&nbsp;</strong><span>{{ error|escape }}</strong>
+                                </div>
+                            {% endfor %}
+                        {% endfor %}
+
+                        {% for error in form.non_field_errors %}
+                            <div class="alert alert-danger">
+                                <strong>{{ error|escape }}</strong>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-lg-2"></div>
+                            
+                            <!-- is_open field -->
+                            <div class="col-lg-7 mb-3">
+                                <div class="form-group">
+                                    <label for="is_open">*وضعیت فروش:</label>
+                                    <div class="col-sm">
+                                        <select name="is_open" id="is_open" class="form-select form-control">
+                                            <option value="True" {% if form.instance.is_open == True %} selected {% endif %}>باز</option>
+                                            <option value="False" {% if form.instance.is_open == False %} selected {% endif %}>بسته</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 pb-5 mb-5">لطفا با دقت این گزینه را انتخاب کنید. با انتخاب گزینه 
+                                <span style="font-weight: bold;">بسته, </span> 
+                                فروش وبسایت بسته میشود و امکان خرید برای کاربران وجود نخواهد داشت.
+                            </div>
+
+                        </div>
+
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-success">
+                                ثبت تغییر
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

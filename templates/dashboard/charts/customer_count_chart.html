@@ -1,0 +1,53 @@
+{% load dashboard_index %}
+Highcharts.chart('customers_count_chart', {
+    {% include 'dashboard/charts/base_reports_chart.html' %}
+    title: {
+        text: "روند عضویت مشتریان",
+        y: 20,
+    },
+
+    colors: ['#22BB33'],
+
+    subtitle: {
+        text: ''
+    },
+
+    yAxis: {
+        title: {
+            text: 'تعداد'
+        }
+    },
+
+    xAxis: {
+        categories: [
+            {% for item in customers %}
+            "{{ item.date_registered|convert_to_jalali }}",
+            {% endfor %}
+        ],
+        reversed: true,
+
+        labels: {
+            style: {
+                direction: "rtl",
+            },
+            align: 'top',
+
+        },
+    },
+
+    tooltip: {
+        pointFormat: ' <b>{point.y}</b>',
+    },
+
+    series: [
+            {
+                name: "تعداد مشتریان",
+                data: [
+                    {% for item in customers %}
+                        {{ item.customers_count|floatformat:"0"  }},
+                    {% endfor %}
+                ]
+            },
+    ],
+
+});

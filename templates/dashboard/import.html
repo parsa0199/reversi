@@ -1,0 +1,7 @@
+<form action="." method='POST' >
+    {% csrf_token %}
+
+    <input type="file" name='imported_file'>
+
+    <button type='submit'>import</button>
+</form>

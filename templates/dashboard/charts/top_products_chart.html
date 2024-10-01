@@ -1,0 +1,78 @@
+{% load dashboard_index %}
+const chart = Highcharts.chart('top_products_chart', {
+    chart: {
+      type: 'bar',
+      height: 480,
+      renderTo: 'container',
+      reflow: true,
+    },
+    
+    title: {
+      text: 'پرفروش‌ترین محصولات (تعدادی)',
+      y: 20,
+    },
+
+    xAxis: {
+      categories: [
+          {% for item in top_products %}
+          '<a href="#" >{{ item.product__title }}</a>',
+          {% endfor %}
+      ],
+      title: {
+        text: null
+      }
+    },
+    yAxis: {
+      min: 0,
+      title: {
+        text: 'تعداد',
+        align: 'high'
+      },
+      labels: {
+        overflow: 'justify'
+      }
+    },
+
+    tooltip: {
+      style: {
+        pointerEvents: 'auto'
+      },
+    },
+
+    colors:['#04a9f5'],
+
+    plotOptions: {
+      bar: {
+        dataLabels: {
+          enabled: true
+        }
+      }
+    },
+    legend: {
+      layout: 'vertical',
+      align: 'right',
+      verticalAlign: 'top',
+      x: -40,
+      y: 80,
+      floating: true,
+      borderWidth: 1,
+      backgroundColor:
+        Highcharts.defaultOptions.legend.backgroundColor || '#FFFFFF',
+      shadow: true,
+      itemStyle: {
+        width: 10
+        }
+    },
+    credits: {
+      enabled: false
+    },
+    series: [{
+      showInLegend: false, 
+      name: '',
+      data: [
+                {% for item in top_products %}
+                    {{ item.pack_quantity__sum }},
+                {% endfor %}
+                ]
+    }]
+  });

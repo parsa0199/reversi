@@ -1,0 +1,18 @@
+{% extends 'layouts/base.html' %}
+
+{% block content %}
+  <h1>Game List</h1>
+  <ul>
+    {% for game in games %}
+      <li>
+        <a href="{% url 'game:game_detail' game.pk %}">
+          Game between {{ game.player1 }} and {{ game.player2 }}
+        </a> - Current Turn: {{ game.current_turn }} - Winner: {{ game.winner|default:"N/A" }}
+      </li>
+    {% empty %}
+      <li>No games have been created yet.</li>
+    {% endfor %}
+  </ul>
+
+  <a href="{% url 'game:new_game' %}" class="btn btn-primary">Start New Game</a>
+{% endblock %}

@@ -1,0 +1,131 @@
+{% comment %} Search Filtering {% endcomment %}
+<div class="collapse" id="ProSearch" style="">
+    <h5 class="text-center pt-4">
+        <i class="feather icon-search"></i>
+        جست‌وجو:</h5>
+    <div class="card-body px-2">
+        <form method='GET' action=".">
+            <input type="hidden" name="filtering" value="True">
+            <div class="row">
+                <div class="col-lg-2 col-md-4 col-12">
+                    <div class="form-group">
+                        <label for="user_id">شناسه کاربر</label>
+                        <input type="number" name="user_id" class="form-control" id="user_id" dir="ltr"
+                               value={{ request.GET.user_id }}>
+                    </div>
+                </div>
+
+                <div class="col-lg-2 col-md-4 col-12">
+                    <div class="form-group">
+                        <label for="ticket_title">عنوان تیکت</label>
+                        <input type="text" name="ticket_title" class="form-control" id="ticket_title"
+                               value="{{ request.GET.ticket_title }}">
+                    </div>
+                </div>
+
+                <div class="col-lg-2 col-md-4 col-12">
+                    <div class="form-group">
+                        <label for="department_code">بخش</label>
+                        <select class="js-example-basic-single" id="department_code" name="department_code">
+                            <option value="-1" {% if request.GET.department_code == "-1" %}selected{% endif %}>همه</option>
+                            <option value= "0" {% if request.GET.department_code == "0" %}selected{% endif %}>
+                                بخش فنی
+                            </option>
+
+                            <option value="1" {% if request.GET.department_code == "1" %}selected{% endif %}>
+                                بخش مالی
+                            </option>
+
+                            <option value="2" {% if request.GET.department_code == "2" %}selected{% endif %}>
+                                نظر و پیشنهادات
+                            </option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-lg-2 col-md-4 col-12">
+                    <div class="form-group">
+                        <label for="status">وضعیت تیکت</label>
+                        <select class="js-example-basic-single" id="status" name="status">
+                            <option value="-1" {% if request.GET.status == "-1" %}selected{% endif %}>همه</option>
+                            <option value= "0" {% if request.GET.status == "0" %}selected{% endif %}>
+                                باز
+                            </option>
+
+                            <option value="1" {% if request.GET.status == "1" %}selected{% endif %}>
+                                درحال بررسی
+                            </option>
+
+                            <option value="2" {% if request.GET.status == "2" %}selected{% endif %}>
+                                بسته شده
+                            </option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-lg-2 col-md-4 col-12">
+                    <div class="form-group">
+                        <label for="paginate_by">نمایش در هر صفحه</label>
+                        <select class="js-example-basic-single" id="paginate_by" name="paginate_by">
+                            <option></option>
+                            <option {% if request.GET.paginate_by == "10" %}selected{% endif %} value=10>10</option>
+                            <option {% if request.GET.paginate_by == "20" %}selected{% endif %} value=20>20</option>
+                            <option {% if request.GET.paginate_by == "50" %}selected{% endif %} value=50>50</option>
+                            <option {% if request.GET.paginate_by == "100" %}selected{% endif %} value=100>100</option>
+                            <option {% if request.GET.paginate_by == "200" %}selected{% endif %} value=200>200</option>
+                            <option {% if request.GET.paginate_by == "500" %}selected{% endif %} value=500>500</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <button type="submit" class="btn btn-success d-flex">جست‌وجو کنید</button>
+                </div>
+
+            </div>
+    </div>
+</div>
+
+<div class="collapse" id="ProFilter" style="">
+    <h5 class="text-center pt-4">
+        <i class="feather icon-filter"></i>
+        فیلتر:</h5>
+    <div class="card-body px-2">
+        <form method='GET' action=".">
+            <input type="hidden" name="filtering" value="True">
+            <div class="row justify-content-center">
+                <div class="col-lg-8 col-12">
+                    <div class="row bg-light py-3 shadow-sm rounded d-flex mx-1">
+                        <div class="col-12 mb-2">
+                            <span class="font-14 text-dark font-weight-bold
+                                        d-flex justify-content-center">تاریخ ارسال تیکت</span>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label class="text-muted d-flex justify-content-center">از</label>
+                                <input class="form-control text-center" data-jdp
+                                name="date_created_from" value="{{ request.GET.date_created_from }}">
+                            </div>
+                        </div>
+
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label class="text-muted d-flex justify-content-center">تا</label>
+                                <input class="form-control text-center" data-jdp
+                                name="date_created_to" value="{{ request.GET.date_created_to }}">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12 mt-3">
+                    <button type="submit" class="btn btn-dark d-flex mx-auto">فیلتر کنید</button>
+                </div>
+
+            </div>
+    </div>
+</div>
+
+{% comment %} Order Filtering {% endcomment %}
+{% include 'filters/ordering.html' %}
+</form>

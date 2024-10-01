@@ -1,0 +1,142 @@
+{% load humanize %}
+
+
+{% comment %} Desktop Header version {% endcomment %}
+<div class="card-header d-none d-lg-flex py-3">
+    <h5 class="mr-auto align-self-center">
+        
+        {% if request.path == '/customers/' %}
+            مشتریان
+        {% elif request.path == '/company/' %}
+            واحد ها
+        {% elif request.path == '/company/flows/' %}
+            فرآیندها
+        {% elif request.path == '/shop/products/' %}
+            محصولات
+        {% elif request.path == '/shop/orders/' %}
+            سفارشات مشتریان
+        {% elif request.path == '/shop/orders_by_one/' %}
+            سفارشات مشتریان
+        {% elif request.path == '/customers/group/' %}
+            گروه‌های مشتریان
+        {% elif request.path == '/targets/gifts/history/' %}
+        تاریخچه اشانتیون‌های مشتریان
+        {% elif request.path == '/tickets/tickets/' %}
+            تیکت ها
+        {% elif request.path == '/targets/notices/history/' %}
+        تاریخچه اطلاع رسانی‌ها
+        {% elif request.path == '/targets/customer-scores/history/' %}
+        تاریخچه امتیازات مشتریان
+        {% elif request.path == '/customers/custom-groups/history/' %}
+        تاریخچه تعریف گروه‌های جدید
+        {% elif request.path == '/shop/leads/' %}
+        سرنخ‌ها
+        {% elif request.path == '/tickets/' %}
+        تیکت‌ها
+        {% endif %}
+    </h5>
+    <div class="ml-auto pl-3">
+        {% if request.GET.filtering %}
+        <a id="export_download" href="{{ request.path }}">
+            <button class="btn btn-danger download_btn collapsed mb-0 d-inline-block circle_btn"
+                data-toggle="tooltip" data-placement="right" title=""
+                data-original-title="حذف فیلتر">
+                <i class="feather icon-x m-0"></i>
+            </button>
+        </a>
+        {% endif %}
+        <a data-toggle="tooltip" data-placement="bottom" title="" data-original-title="مرتب‌سازی">
+            <button class="btn btn-primary pro_filter_btn
+            collapsed mb-0 d-inline-block circle_btn" type="button" data-toggle="collapse" data-target="#ProOrder"
+                aria-expanded="false" aria-controls="ProSearch">
+                <i class="fas fa-sort-amount-up icon_padding m-0"></i>
+            </button>
+        </a>
+
+        <a data-toggle="tooltip" data-placement="bottom" title="" data-original-title="فیلتر">
+            <button class="btn btn-dark pro_filter_btn
+            collapsed mb-0 d-inline-block circle_btn" type="button" data-toggle="collapse" data-target="#ProFilter"
+                aria-expanded="false" aria-controls="ProFilter">
+                <i class="feather icon-filter icon_padding m-0"></i>
+            </button>
+        </a>
+
+        <a data-toggle="tooltip" data-placement="bottom" title="" data-original-title="جست‌وجو">
+            <button class="btn btn-success pro_filter_btn
+            collapsed mb-0 d-inline-block circle_btn" type="button" data-toggle="collapse" data-target="#ProSearch"
+                aria-expanded="false" aria-controls="ProSearch">
+                <i class="feather icon-search icon_padding m-0"></i>
+            </button>
+        </a>
+
+        <a id="export_download"
+        href = "?export=1{% for key, value in request.GET.items %}{% if key != 'export' %}{% endif %}&{{key}}={{value}}{% endfor %}"
+        data-toggle="tooltip"
+            data-placement="bottom" title="" data-original-title="دانلود جدول">
+            <button class="btn purple-btn download_btn collapsed mb-0 d-inline-block circle_btn">
+                <i class="feather icon-download m-0"></i>
+            </button>
+        </a>
+
+    </div>
+
+    <span class="float-right font-17 text-dark align-self-center">
+        {% if completed_objects_count %}
+        <span class="text-success"
+            data-toggle="tooltip" data-placement="bottom" title="" data-original-title="سفارشات تکمیل شده">
+            ({{ completed_objects_count|intcomma:False }})
+        </span>
+        {% endif %}
+        {{ objects_count|intcomma:False }}
+        <i class="feather icon-layers"></i></span>
+</div>
+
+{% comment %} Mobile Header version {% endcomment %}
+<div class="card-header d-lg-none d-block py-3">
+    <h5 class="mr-auto align-self-center">
+        {% if request.path == '/customers/' %}
+            مشتریان
+        {% elif request.path == '/shop/products/' %}
+            محصولات
+        {% elif request.path == '/tickets/tickets/' %}
+            تیکت ها
+        {% elif request.path == '/shop/orders/' %}
+            سفارشات مشتریان
+        {% elif request.path == '/shop/orders_by_one/' %}
+            سفارشات مشتریان
+        {% elif request.path == '/customers/group/' %}
+            گروه‌های مشتریان
+        {% elif request.path == '/targets/gifts/history/' %}
+        تاریخچه اشانتیون‌های مشتریان
+        {% endif %}
+    </h5>
+    <span class="float-right font-17 text-dark align-self-center">
+        {{ objects_count|intcomma:False }}
+        <i class="feather icon-users"></i></span>
+
+    <div class="mx-auto mt-3 justify-content-center mx-auto d-flex">
+        <button id="pro_filter_btn" class="btn btn-light collapsed ml-2 mb-0 d-inline-block"
+            type="button" data-toggle="collapse" data-target="#ProSearch" aria-expanded="false"
+            aria-controls="ProSearch">
+            جست‌وجو
+            <i class="feather icon-search icon_padding m-0"></i>
+        </button>
+        <a id="export_download" 
+        {% if 'customers' in request.path %}
+            href="{% url 'main:export' 'customers' %}"
+        {% elif 'products' in request.path %}
+            href="{% url 'main:export' 'products' %}"
+        {% elif 'tickets' in request.path %}
+            href="{% url 'main:export' 'tickets' %}"
+        {% elif 'orders' in request.path %}
+            href="{% url 'main:export' 'orders' %}"
+        {% elif 'orders_by_one' in request.path %}
+            href="{% url 'main:export' 'orders_by_one' %}"
+        {% endif %}
+        
+            class="btn btn-light collapsed mb-0 d-inline-block">
+            دانلود
+            <i class="feather icon-download m-0"></i>
+        </a>
+    </div>
+</div>

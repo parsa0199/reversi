@@ -1,0 +1,44 @@
+{% extends "dashboard/layouts/base-fullscreen.html" %}
+
+{% block title %} عملیات خوشه‌بندی {% endblock %}
+
+{% block content %}
+
+{% load static %}
+<div class="auth-wrapper">
+	<div class="auth-content">
+		<div class="auth-bg">
+			<span class="r"></span>
+			<span class="r s"></span>
+			<span class="r s"></span>
+			<span class="r"></span>
+		</div>
+		<div class="card rounded shadow p-4">
+			<div class="card-body text-center">
+				<div class="mb-5 mt-1">
+					{% comment %} <i class="feather icon-user auth-icon"></i> {% endcomment %}
+					<img src="{{ site.large_logo_dark.url }}" class="mx-auto d-flex" loading="lazy"
+						alt="{{ site.title }}"> </div>
+				<h3 class="mb-0">عملیات خوشه‌بندی
+					<br>
+					انجام گردید.</h3>
+
+				<br />
+
+				<span class="text-muted">
+					فقط کاربران ادمین به این صفحه دسترسی دارند.
+					<br>
+					<a href="/">بازگشت به صفحه اصلی</a>
+				</span>
+
+				<a href="{% url 'accounts:logout' %}" class="text-danger d-block mt-5 font-weight-normal">
+					<i class="feather icon-log-out"></i>
+					خروج از سایت
+				</a>
+
+			</div>
+		</div>
+	</div>
+</div>
+
+{% endblock content %}

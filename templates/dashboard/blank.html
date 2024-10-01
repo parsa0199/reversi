@@ -1,0 +1,42 @@
+{% extends "dashboard/layouts/base.html" %}
+{% load static %}
+{% load humanize %}
+
+{% block title %}تست{% endblock %}
+
+
+{% block stylesheets %}
+<link rel="stylesheet" href="{% static 'dashboard/css/management/style.css' %}">
+<style>
+
+</style>
+{% endblock stylesheets %}
+
+
+{% block breadcrumb %}
+<ul class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/dashboard/"><i class="fas fa-tachometer-alt ml-1"></i>تست</a></li>
+</ul>
+{% endblock breadcrumb %}
+
+
+{% block content %}
+<div class="main-body">
+    <div class="page-wrapper">
+        <div class="row"  style="height:86vh">
+            <div class="col-12 align-self-center text-center">
+                <h1>
+                    محتوا
+                </h1>
+            </div>
+        </div>
+
+    </div>
+</div>
+</div>
+
+{% endblock content %}
+
+{% block javascripts %}
+
+{% endblock javascripts %}

@@ -1,0 +1,75 @@
+<!-- Start of edit model -->
+<div class="modal fade" id="item_add" tabindex="-1" aria-labelledby="item_edit_title" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="item_edit_title">افزودن {{ object_name_fa }}</h5>
+            </div>
+
+            <form action="{% url 'dashboard:product-create'  %}"
+                  method="POST" enctype="multipart/form-data" novalidate>
+                {% csrf_token %}
+                {% include "dashboard/products/product_fields.html" %}
+            </form>
+        </div>
+    </div>
+</div>
+<!-- End of edit modal -->
+{% block javascripts %}
+    <script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Function to convert and format dates
+    function convertDate(inputElement) {
+        var jalaliDate = inputElement.value.trim();
+        console.log('Original Jalali Date:', jalaliDate);
+
+        // Parse the Jalali date in the format "1403/03/15"
+        var parts = jalaliDate.split('/');
+        if (parts.length === 3) {
+            var year = parseInt(parts[0], 10);
+            var month = parseInt(parts[1], 10);
+            var day = parseInt(parts[2], 10);
+            console.log('Parsed Year:', year, 'Month:', month, 'Day:', day);
+
+            // Validate the parsed values
+            if (year > 0 && month > 0 && month <= 12 && day > 0 && day <= 31) {
+                try {
+                    // Convert the Jalali date to Gregorian
+                    var gregorianDate = jalaali.toGregorian(year, month, day);
+                    console.log('Gregorian Date Object:', gregorianDate);
+
+                    // Format Gregorian date to "YYYY-MM-DD"
+                    var formattedDate = [
+                        gregorianDate.gy,
+                        ('0' + gregorianDate.gm).slice(-2),
+                        ('0' + gregorianDate.gd).slice(-2)
+                    ].join('-');
+                    console.log('Formatted Gregorian Date:', formattedDate);
+
+                    // Set the value to the input field
+                    inputElement.value = formattedDate;
+                } catch (e) {
+                    console.error('Error during conversion:', e);
+                }
+            } else {
+                console.error('Invalid date components:', year, month, day);
+            }
+        } else {
+            console.error('Invalid date format:', jalaliDate);
+        }
+    }
+
+    // Attach event listeners to both input fields
+    var validToInput = document.getElementById('valid_to-{{ item.id }}');
+    var validFromInput = document.getElementById('valid_from-{{ item.id }}');
+
+    validToInput.addEventListener('change', function() {
+        convertDate(validToInput);
+    });
+
+    validFromInput.addEventListener('change', function() {
+        convertDate(validFromInput);
+    });
+});
+    </script>
+{% endblock javascripts %}

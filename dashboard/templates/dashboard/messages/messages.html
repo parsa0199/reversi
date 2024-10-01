@@ -1,0 +1,113 @@
+{% extends "dashboard/layouts/base.html" %}
+{% load static %}
+{% load humanize %}
+
+
+{% block title %}
+    لیست {{ object_name_fa_plural }}
+{% endblock %}
+
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item"><a href="{{ request.path }}">لیست {{ object_name_fa_plural }}</a></li>
+{% endblock breadcrumb %}
+
+
+{% block content %}
+    <div class="main-body">
+        <div class="page-wrapper">
+            <div class="card card-default mt-2">
+                <div class="card-header">
+                    <h5>لیست {{ object_name_fa_plural }}</h5>
+                    {% include 'dashboard/coupons/add_coupon.html' %}
+                </div>
+                <div class="card-body">
+                    {% include './filters.html' %}
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="row">
+                            {#                            <div class="col-md-12">#}
+                            {#                                {% include "./search.html" %}#}
+                            {#                            </div>#}
+                            <div class="col-12 col-md-2">
+                                {% comment %} <a href="" class="btn btn-success mb-3 w-100" data-toggle="modal" data-target="#item_add">
+                                <i class="fa fa-plus font-17 mx-2" ></i>
+                                افزودن {{ object_name_fa }} جدید
+                            </a> {% endcomment %}
+                                {{ form.errors }}
+                            </div>
+
+                            {% comment %} <div class="col-md-10">
+                            {% include "./search.html" %}
+                        </div> {% endcomment %}
+                            <div class="col-sm-12 table-responsive" style="overflow-y: scroll;">
+                                <table id="sortable-table" class="table table-bordered" role="grid" aria-describedby="datatable-checkbox_info">
+                                    <thead>
+                                    <tr>
+                                        <th class="text-center" style='min-width:150px'>
+                                            <i class="fas fa-user"></i> فرستنده
+                                        </th>
+                                        <th class="text-center" style='min-width:150px'>
+                                            <i class="fas fa-envelope"></i> ایمیل
+                                        </th>
+                                        <th class="text-center" style='min-width:150px'>
+                                            <i class="fas fa-phone"></i> تلفن
+                                        </th>
+                                        <th class="text-center" style='min-width:150px'>
+                                            <i class="fas fa-tag"></i> موضوع
+                                        </th>
+                                        <th class="text-center" style='min-width:150px'>
+                                            <i class="fas fa-comment"></i> پیام
+                                        </th>
+                                        <th class="text-center" style='min-width:150px'>
+                                            <i class="fas fa-info-circle"></i> وضعیت
+                                        </th>
+                                        <th class="text-center" style='min-width:150px'>
+                                            <i class="fas fa-calendar"></i> تاریخ ارسال
+                                        </th>
+                                        <th class="text-center" style='min-width:150px'>
+                                            <i class="fas fa-eye"></i> مشاهده
+                                        </th>
+
+
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    {% for item in contact_messages %}
+                                        <tr data-id="{{ item.id }}">
+                                            <td>{{ item.name }}</td>
+                                            <td>{{ item.email }}</td>
+                                            <td>{{ item.phone|default:'-' }}</td>
+                                            <td>{{ item.subject }}</td>
+
+                                            <td>{{ item.message|striptags|safe|truncatewords:12 }}...</td>
+
+
+                                            <td class="text-center">
+                                                {% if item.status == 'seen' %}
+                                                    <span class="badge badge-success p-2">خوانده شده</span>
+                                                {% else %}
+                                                    <span class="badge badge-danger p-2">جدید</span>
+                                                {% endif %}
+                                            </td>
+                                            <td>{{ item.get_created_at }}</td>
+                                            <td><a href="{% url 'dashboard:message_detail' item.id %}" title="مشاهده پیام" class=" text-info h4"> <i class="fas fa-eye"></i></a></td>
+
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                                {% include "includes/pagination.html" %}
+                                <span>{{ objects_count }} مورد یافت شد.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+{% endblock content %}

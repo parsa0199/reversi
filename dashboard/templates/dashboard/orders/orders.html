@@ -1,0 +1,114 @@
+{% extends "dashboard/layouts/base.html" %}
+{% load static %}
+{% load humanize %}
+
+{% block title %}
+لیست {{ object_name_fa_plural }}
+{% endblock %}
+
+
+{% block stylesheets %}
+<link rel="stylesheet" href="{% static 'css/management/style.css' %}">
+<style>
+
+</style>
+{% endblock stylesheets %}
+
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item"><a href="{{ request.path }}">لیست {{ object_name_fa_plural }}</a></li>
+{% endblock breadcrumb %}
+
+
+{% block content %}
+<div class="main-body">
+    <div class="page-wrapper">
+        <div class="card card-default mt-2">
+            <div class="card-header">
+                <h5>لیست {{ object_name_fa_plural }}</h5>
+            </div>
+            <div class="card-body">
+                {% include './filters.html' %}
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="row">
+                        <div class="col-md-12">
+                            {% include "./search.html" %}
+                        </div>
+                        <div class="col-sm-12 table-responsive" style="overflow-y: scroll;">
+                            <table id="sortable-table" class="table table-bordered" role="grid" aria-describedby="datatable-checkbox_info">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">کد سفارش</th>
+                                        <th class="text-center" style='min-width:100px'>فاکتور</th>
+                                        <th class="text-center" style='min-width:150px'>تاریخ خرید</th>
+                                        <th class="text-center" style='min-width:150px'>خریدار</th>
+                                        <th class="text-center">موبایل</th>
+                                        <th class="text-center" style='min-width:100px'>وضعیت پرداخت</th>
+                                        <th class="text-center" style='min-width:100px'>وضعیت سفارش</th>
+                                        <th class="text-center" style='min-width:150px'>مبلغ پرداختی</th>
+                                        <th class="text-center" style='min-width:100px'>روش ارسال</th>
+                                        <th class="text-center" style='min-width:150px'>زمان ارسال</th>
+                                        <th class="text-center" style='min-width:150px'>هزینه ارسال</th>
+                                        <th class="text-center" style='min-width:100px'>دریافت فاکتور</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for item in orders %}
+                                    <tr data-id="{{ item.id }}">
+                                        <td class="text-center">
+                                            <a href="#" class="text-info font-weight-bold"  data-toggle="modal"
+                                                data-target="#item_edit_{{ item.id }}">
+                                                {{ item.code|default:"_" }}
+                                            </a>
+                                        </td>
+                                        <td class="text-center">
+                                            <a class="text-info" href="{{ item.get_factor_url }}" target='_blank'>
+                                                مشاهده فاکتور
+                                            </a>
+                                        </td>
+                                        <td class="text-center">{{ item.get_paid_time|default:"_" }}</td>
+                                        <td class="text-center">{{ item.get_full_name|default:"_" }}</td>
+                                        <td class="text-center">{{ item.phone|default:"_" }}</td>
+                                        <td class="text-center  text-success">
+                                            {% if item.is_paid %}
+                                                <i class="fas fa-check-circle font-16"></i>
+                                                موفق
+                                            {% else %}
+                                                <i class="fas fa-times font-16 text-danger"></i>
+                                                ناموفق
+                                            {% endif %}
+                                        </td>
+                                        <td>{{ item.get_status }}</td>
+                                        <td>{{ item.total_price_after_discount|intcomma:False }} تومان</td>
+                                        <td>{{ item.get_delivery_option }}</td>
+                                        <td>{{ item.send_date }}</td>
+                                        <td>{{ item.delivery_cost|intcomma:False }} تومان</td>
+                                        <td class="text-center">
+                                            {% if item.receive_factor %}
+                                            بله
+                                            {% else %}
+                                            -
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+
+                                    {% include "./edit_order.html"%}
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                            {% include "includes/pagination.html" %}
+                            <span>{{ objects_count }} مورد یافت شد.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
+
+{% block javascripts %}
+
+
+{% endblock javascripts %}

@@ -1,0 +1,19 @@
+{% extends "layouts/base.html" %}
+
+{% load static %}
+
+{% block content %}
+    <div class="text-center container bg-white">
+    <h1>Roll the Dice!</h1>
+
+    <!-- Link to trigger dice roll using a GET request -->
+    <a href="?roll=1"><button>تاس بریز!</button></a>
+
+    {% if roll_value %}
+        <div class="dice-result">
+            <h2>You rolled: {{ roll_value }}</h2>
+        {{ result }}
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

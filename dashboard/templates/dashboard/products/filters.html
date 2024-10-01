@@ -1,0 +1,31 @@
+<form method="GET" action="." >
+    <div class="row justify-content-start align-items-center mb-3">
+        <div class="col-sm-2 d-flex justify-content-end m-1">
+            <h5 class=" text-info">فیلتر بر حسب:</h5>
+        </div>
+        <div class="col-sm-3 m-1">
+            <select name="category" id="category_filter" class="form-select form-control">
+                <option value="all">همه دسته ها</option>
+                {% for category in categories %}
+                    <option value="{{ category.slug }}" {% if request.GET.category == category.slug %}selected{% endif %}>
+                        {{ category.title }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-sm-2 m-1">
+            <select name="is_active" id="is_active_filter" class="form-select">
+                <option value="None">همه</option>
+                <option value="True" {% if request.GET.is_active == 'True' %}selected{% endif %}>فعال</option>
+                <option value="False" {% if request.GET.is_active == 'False' %}selected{% endif %}>غیرفعال</option>
+            </select>
+        </div>
+
+
+        <div class="col-sm-1   justify-content-end m-1">
+            <button type="submit" class="btn btn-info">فیلتر
+                <i class="fas fa-filter"></i>
+            </button>
+        </div>
+    </div>
+</form>

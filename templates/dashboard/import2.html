@@ -1,0 +1,41 @@
+{% if confirm_form %}
+<form action="{% url 'shop:confirm_import_period' %}" method="POST">
+  {% csrf_token %}
+  {{ confirm_form.as_p }}
+  <p>
+   Below is a preview of data to be imported. If you are satisfied with the results, click 'Confirm import'
+  </p>
+  <div class="submit-row">
+    <input type="submit" class="default" name="confirm" value="Confirm import">
+  </div>
+</form>
+{% else %}
+<form action="" method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+
+  <p>
+    "This importer will import the following fields:
+    <code>{{ fields|join:", " }}</code>
+  </p>
+
+  <fieldset class="module aligned">
+    {% for field in form %}
+      <div class="form-row">
+        {{ field.errors }}
+
+        {{ field.label_tag }}
+
+        {{ field }}
+
+        {% if field.field.help_text %}
+        <p class="help">{{ field.field.help_text|safe }}</p>
+        {% endif %}
+      </div>
+    {% endfor %}
+  </fieldset>
+
+  <div class="submit-row">
+    <input type="submit" class="default" value="Submit">
+  </div>
+</form>
+{% endif %}

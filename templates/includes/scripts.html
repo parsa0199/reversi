@@ -1,0 +1,96 @@
+{% load static %}
+
+
+
+<script src="{% static 'main/js/core/jquery.3.2.1.min.js' %}" type="text/javascript"></script>
+<script src="{% static 'main/js/core/popper.min.js' %}" type="text/javascript"></script>
+<script src="{% static 'main/js/core/bootstrap.min.js' %}" type="text/javascript"></script>
+<script src="{% static 'main/js/plugins/bootstrap-switch.js' %}"></script>
+<script src="{% static 'main/js/plugins/nouislider.min.js' %}" type="text/javascript"></script>
+<script src="{% static 'main/js/plugins/bootstrap-datepicker.js' %}" type="text/javascript"></script>
+<script src="{% static 'main/js/plugins/jquery.sharrre.js' %}" type="text/javascript"></script>
+<script src="{% static 'main/js/now-ui-kit.js' %}" type="text/javascript"></script>
+<script src="{% static 'main/js/plugins/countdown.min.js' %}" type="text/javascript"></script>
+<script src="{% static 'main/js/plugins/owl.carousel.min.js' %}" type="text/javascript"></script>
+<script src="{% static 'main/js/plugins/jquery.easing.1.3.min.js' %}" type="text/javascript"></script>
+<script src="{% static 'main/datepicker/jalalidatepicker.min.js' %}" type="text/javascript"></script>
+<script src="{% static 'main/js/login_register.js' %}" type="text/javascript"></script>
+<script src="{% static 'main/css/plugins/prettyphoto/js/jquery.prettyPhoto.js' %}"  type="text/javascript"></script>
+
+<!-- custom Js -->
+<script src="{% static 'main/js/main.js' %}" type="text/javascript"></script>
+
+
+<script>
+    $(document).ready(function() {
+        var now = new persianDate();
+        var minDate = now.hour() >= 17 ? now.add('days', 1).startOf('day') : now.startOf('day'); // از ساعت 17 به بعد، امروز غیرقابل انتخاب
+
+        $("#datepicker").persianDatepicker({
+            observer: true,
+            format: 'YYYY/MM/DD',
+            initialValue: false,
+            autoClose: true,
+            minDate: minDate.valueOf(),
+        });
+    });
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // بررسی وجود دکمه بستن
+        const closeButton = document.querySelector('.close-button-2');
+        if (closeButton) {
+            const modal = document.getElementById('myModal');
+            // تابع برای بستن مودال
+            const closeModal = () => {
+                modal.style.display = 'none';
+            };
+
+            // بستن مودال با کلیک روی دکمه بستن
+            closeButton.addEventListener('click', closeModal);
+
+            // بستن مودال با کلیک خارج از مودال
+            window.addEventListener('click', (event) => {
+                if (event.target == modal) {
+                    closeModal();
+                }
+            });
+        }
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const modal = document.getElementById('myModal');
+        const closeButton = document.querySelector('.close-button-2');
+
+        if (closeButton) {
+            // تابع برای بستن مودال
+            const closeModal = () => {
+                modal.style.display = 'none';
+            };
+            // بستن مودال با کلیک روی دکمه بستن
+            closeButton.addEventListener('click', closeModal);
+            // بستن مودال با کلیک خارج از مودال
+            window.addEventListener('click', (event) => {
+                if (event.target == modal) {
+                    closeModal();
+                }
+            });
+            // اضافه کردن تأخیر برای بستن مودال بعد از 3 ثانیه
+            setTimeout(closeModal, 3000);
+        }
+    });
+</script>
+
+<script>
+    !function(){var i="65ZcH8",a=window,d=document;function g(){var g=d.createElement("script"),s="https://www.goftino.com/widget/"+i,l=localStorage.getItem("goftino_"+i);g.async=!0,g.src=l?s+"?o="+l:s;d.getElementsByTagName("head")[0].appendChild(g);}"complete"===d.readyState?g():a.attachEvent?a.attachEvent("onload",g):a.addEventListener("load",g,!1);}();
+    var header = document.querySelector("header");
+            var bottomHeader = document.querySelector(".header-bottom");
+
+            window.addEventListener('scroll', function() {
+            if (window.pageYOffset > 50) {
+                bottomHeader.classList.add("sticky");
+            } else {
+                bottomHeader.classList.remove("sticky");
+            }
+            });
+</script>

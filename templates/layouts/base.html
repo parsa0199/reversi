@@ -1,0 +1,93 @@
+{% load static %}
+
+
+<!DOCTYPE html>
+<html lang="fa">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>
+        {% block title %} {% endblock title %}
+    </title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'new-theme/img/favicon.ico' %}">
+
+    <meta name="theme-color" content="#c40316">
+
+    <meta content="فروش مستقیم انواع لیبل ، ریبون و کاغذ و ..." name="description">
+    <meta content="الورول, Aloroll" name="keywords">
+    <meta property="og:title" content="الورول | aloroll" />
+    <meta property="og:description" content="فروشگاه الورول" />
+
+    <meta name="theme-color" content="#D5E0EB">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="apple-mobile-web-app-title" content="فروشگاه اینترنتی الورول">
+    <meta name="application-name" content="فروشگاه اینترنتی الورول">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon"  href="{% static 'main/img/logo-192-192.jpg' %}">
+    <link rel="apple-touch-icon" sizes="192x192" href="{% static 'main/img/logo-192-192.jpg' %}">
+
+    <meta name='robots' content='index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1' />
+    {% block meta %}
+    {% endblock meta %}
+
+    <link rel="icon" href="{% static 'main/img/cropped-Logo-Ok-32x32.png' %}" sizes="32x32" />
+    <link rel="icon" href="{% static 'main/img/cropped-Logo-Ok-192x192.png' %}" sizes="192x192" />
+    <meta name="msapplication-TileImage" content="https://aloroll.com{% static 'main/img/cropped-Logo-Ok-270x270.png' %}" />
+
+    <!-- Matomo -->
+    <script>
+        var _paq = window._paq = window._paq || [];
+        /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+        _paq.push(['trackPageView']);
+        _paq.push(['enableLinkTracking']);
+        (function() {
+            var u="//sdata-matomo.iran.liara.run/";
+            _paq.push(['setTrackerUrl', u+'matomo.php']);
+            _paq.push(['setSiteId', '5']);
+            var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+            g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+        })();
+    </script>
+    <!-- End Matomo Code -->
+
+
+    {% include "includes/stylesheets.html" %}
+    {% block stylesheets %}{% endblock stylesheets %}
+    {% block css %}
+    {% endblock css %}
+</head>
+
+<body class="index-page sidebar-collapse bg-dark">
+
+
+
+
+{% include "includes/header.html" %}
+
+
+{% block breadcrumb %}
+
+{% endblock breadcrumb %}
+
+{% block content %} {% endblock content %}
+
+
+{% include "includes/footer.html" %}
+
+
+<!-- js
+========================= -->
+{% include "includes/scripts.html" %}
+{% block js %}
+
+{% endblock js %}
+
+
+</body>
+</html>

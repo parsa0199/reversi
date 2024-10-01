@@ -1,0 +1,133 @@
+{% extends "dashboard/layouts/base.html" %}
+{% load static %}
+{% load humanize %}
+
+
+{% block title %}
+    لیست {{ object_name_fa_plural }}
+{% endblock %}
+
+
+{% block breadcrumb %}
+        <li class="breadcrumb-item"><a href="{{ request.path }}">لیست {{ object_name_fa_plural }}</a></li>
+{% endblock breadcrumb %}
+
+
+{% block content %}
+    <div class="main-body">
+        <div class="page-wrapper">
+            <div class="card card-default mt-2">
+                <div class="card-header">
+                    <h5>لیست {{ object_name_fa_plural }}</h5>
+                    <a href="#" class="text-info"  data-toggle="modal" title="ساخت کوپن جدید"
+                       data-target="#item_add">
+
+                        <i class=" p-2 rounded rounded-4 border border-info fas fa-plus"></i>
+                    </a>
+                    {% include 'dashboard/coupons/add_coupon.html' %}
+                </div>
+                <div class="card-body">
+                    {% include './filters.html' %}
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="row">
+                            <div class="col-md-12">
+                                {% include "./search.html" %}
+                            </div>
+                            <div class="col-12 col-md-2">
+                                {% comment %} <a href="" class="btn btn-success mb-3 w-100" data-toggle="modal" data-target="#item_add">
+                                <i class="fa fa-plus font-17 mx-2" ></i>
+                                افزودن {{ object_name_fa }} جدید
+                            </a> {% endcomment %}
+                                {{ form.errors }}
+                            </div>
+
+                            {% comment %} <div class="col-md-10">
+                            {% include "./search.html" %}
+                        </div> {% endcomment %}
+                            <div class="col-sm-12 table-responsive" style="overflow-y: scroll;">
+                                <table id="sortable-table" class="table table-bordered" role="grid" aria-describedby="datatable-checkbox_info">
+                                    <thead>
+                                    <tr>
+                                        <th class="text-center" style='min-width:150px'>کد</th>
+                                        <th class="text-center" style='min-width:150px'>مبلغ تخفیف </th>
+                                        <th class="text-center" style='min-width:150px'>وضعیت</th>
+                                        <th class="text-center" style='min-width:150px'>بازه اعتبار</th>
+                                        <th class="text-center" style='min-width:150px'>تعداد استفاده شده</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    {% for item in coupons %}
+                                        <tr data-id="{{ item.id }}">
+                                            <td class="text-right">
+                                                <a href="#" class="text-info font-weight-bold"  data-toggle="modal"
+                                                   data-target="#item_edit_{{ item.id }}">
+                                                    <img class="ml-1" src="{{ item.image.url }}" loading='lazy'
+                                                         width="50"
+                                                         alt="">
+                                                    {{ item.code|default:"_" }}
+                                                </a>
+                                            </td>
+                                            <td>{{ item.discount|default:'0'|intcomma:False }} تومان</td>
+                                            <td class="text-center">
+                                                {% if item.active %}
+                                                    <span class="badge badge-success p-2">فعال</span>
+                                                {% else %}
+                                                    <span class="badge badge-danger p-2">غیرفعال</span>
+                                                {% endif %}
+                                            </td>
+                                            <td class="text-center">
+                                                از   <span class="text-info">{{ item.get_valid_from_jalali }}</span> تا <span class="text-danger">{{ item.get_valid_to_jalali }}</span>
+                                            </td>
+                                            <td class="text-center">
+                                                {{ item.times_used }}
+                                            </td>
+
+
+                                            {% comment %} <td class="text-center">
+                                            <a href="" data-toggle="modal" class="text-info"
+                                                data-target="#item_edit_{{ item.id }}">
+                                                <i class="fa fa-edit text-info font-17 mx-2"
+                                                    data-toggle="tooltip" title=""
+                                                    data-original-title="ویرایش"></i>
+                                            </a>
+                                        </td> {% endcomment %}
+                                        </tr>
+                                        {% include "./edit_coupon.html"%}
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                                {% include "includes/pagination.html" %}
+                                <span>{{ objects_count }} مورد یافت شد.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="infoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Your content here...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">بستن</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% comment %} {% include "./add_product.html" %} {% endcomment %}
+
+{% endblock content %}

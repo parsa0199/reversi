@@ -1,0 +1,183 @@
+{% comment %} Search Filtering {% endcomment %}
+<div class="collapse" id="ProSearch" style="">
+    <h5 class="text-center pt-4">
+        <i class="feather icon-search"></i>
+        جست‌وجو:</h5>
+    <div class="card-body px-2">
+        <form method='GET' action=".">
+            <input type="hidden" name="filtering" value="True">
+            <div class="row">
+                <div class="col-lg-2 col-md-4 col-12">
+                    <div class="form-group">
+                        <label for="customer_id">شناسه مشتری</label>
+                        <input type="number" name="customer_id" class="form-control" id="customer_id" dir="ltr"
+                               value={{ request.GET.customer_id }}>
+                    </div>
+                </div>
+
+                <div class="col-lg-2 col-md-4 col-12">
+                    <div class="form-group">
+                        <label for="name">نام نام خانوادگی</label>
+                        <input type="text" name="full_name" class="form-control" id="name"
+                               value="{{ request.GET.full_name }}">
+                    </div>
+                </div>
+
+                <div class="col-lg-2 col-md-4 col-12">
+                    <div class="form-group">
+                        <label for="phone">موبایل</label>
+                        <input type="text" name="phone" dir="ltr" class="form-control" id="phone"
+                               value="{{ request.GET.phone }}">
+                    </div>
+                </div>
+
+                <div class="col-lg-2 col-md-4 col-12">
+                    <div class="form-group">
+                        <label for="email">آدرس ایمیل</label>
+                        <input type="text" name="email" dir="ltr" class="form-control" id="email"
+                               value="{{ request.GET.email }}">
+                    </div>
+                </div>
+
+                <div class="col-lg-2 col-md-4 col-12">
+                    <div class="form-group">
+                        <label for="paginate_by">نمایش در هر صفحه</label>
+                        <select class="js-example-basic-single" id="paginate_by" name="paginate_by">
+                            <option></option>
+                            <option {% if request.GET.paginate_by == "10" %}selected{% endif %} value=10>10</option>
+                            <option {% if request.GET.paginate_by == "20" %}selected{% endif %} value=20>20</option>
+                            <option {% if request.GET.paginate_by == "50" %}selected{% endif %} value=50>50</option>
+                            <option {% if request.GET.paginate_by == "100" %}selected{% endif %} value=100>100</option>
+                            <option {% if request.GET.paginate_by == "200" %}selected{% endif %} value=200>200</option>
+                            <option {% if request.GET.paginate_by == "500" %}selected{% endif %} value=500>500</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-lg-2 col-md-4 col-12">
+                    <div class="form-group">
+                        <label for="province">استان</label>
+                        <select class="js-example-basic-single" id="province" name="province">
+                            <option></option>
+                            {% for province in all_provinces %}
+                                <option value="{{ province }}" {% if request.GET.province == province %}selected{% endif %}>
+                                    {{ province }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-lg-2 col-md-4 col-12">
+                    <div class="form-group">
+                        <label for="city">شهر</label>
+                        <select class="js-example-basic-single" id="city" name="city">
+                            <option></option>
+                            {% for city in all_cities %}
+                                <option value="{{ city }}"
+                                        {% if request.GET.city == city %}selected{% endif %}>{{ city }}
+                                </option>
+                            {% endfor %}
+                        </select>
+
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <button type="submit" class="btn btn-success d-flex">جست‌وجو کنید</button>
+                </div>
+
+            </div>
+    </div>
+</div>
+
+<div class="collapse" id="ProFilter" style="">
+    <h5 class="text-center pt-4">
+        <i class="feather icon-filter"></i>
+        فیلتر:</h5>
+    <div class="card-body px-2">
+        <form method='GET' action=".">
+            <input type="hidden" name="filtering" value="True">
+            <div class="row justify-content-center">
+                <div class="col-lg-4 col-12">
+                    <div class="row bg-light py-3 shadow-sm rounded d-flex mx-1">
+                        <div class="col-12 mb-2">
+                            <span class="font-14 text-dark font-weight-bold
+                                        d-flex justify-content-center">تاریخ ثبت نام</span>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label class="text-muted d-flex justify-content-center">از</label>
+                                <input class="form-control text-center" data-jdp
+                                name="date_registered_from" value="{{ request.GET.date_registered_from }}">
+                            </div>
+                        </div>
+
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label class="text-muted d-flex justify-content-center">تا</label>
+                                <input class="form-control text-center" data-jdp
+                                name="date_registered_to" value="{{ request.GET.date_registered_to }}">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-12">
+                    <div class="row bg-light py-3 shadow-sm rounded d-flex mx-1">
+                        <div class="col-12 mb-2">
+                            <span class="font-14 text-dark font-weight-bold
+                                        d-flex justify-content-center">تاریخ آخرین حضور کاربر</span>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label class="text-muted d-flex justify-content-center">از</label>
+                                <input class="form-control text-center" data-jdp
+                                name="date_last_active_from" value="{{ request.GET.date_last_active_from }}">
+                            </div>
+                        </div>
+
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label class="text-muted d-flex justify-content-center">تا</label>
+                                <input class="form-control text-center" data-jdp
+                                name="date_last_active_to" value="{{ request.GET.date_last_active_to }}">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-12">
+                    <div class="row bg-light py-3 shadow-sm rounded d-flex mx-1">
+                        <div class="col-12 mb-2">
+                            <span class="font-14 text-dark font-weight-bold
+                                        d-flex justify-content-center">تاریخ آخرین سفارش</span>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label class="text-muted d-flex justify-content-center">از</label>
+                                <input class="form-control text-center" data-jdp
+                                name="date_last_order_from" value="{{ request.GET.date_last_order_from }}">
+                            </div>
+                        </div>
+
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label class="text-muted d-flex justify-content-center">تا</label>
+                                <input class="form-control text-center" data-jdp
+                                name="date_last_order_to" value="{{ request.GET.date_last_order_to }}">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12 mt-3">
+                    <button type="submit" class="btn btn-dark d-flex mx-auto">فیلتر کنید</button>
+                </div>
+
+            </div>
+    </div>
+</div>
+
+{% comment %} Order Filtering {% endcomment %}
+{% include 'filters/ordering.html' %}
+</form>

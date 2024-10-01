@@ -1,0 +1,53 @@
+{% load dashboard_index %}
+Highcharts.chart('orders_cost_chart', {
+    {% include 'dashboard/charts/base_reports_chart.html' %}
+    title: {
+        text: "مبلغ فروش سفارشات (تومان)",
+        y: 20,
+    },
+
+    colors: ['#FF6600'],
+
+    subtitle: {
+        text: ''
+    },
+
+    yAxis: {
+        title: {
+            text: 'مبلغ کل فاکتور(تومان)'
+        }
+    },
+
+    xAxis: {
+        categories: [
+            {% for date, cost in orders_cost.items %}
+            "{{ date|convert_to_jalali }}",
+            {% endfor %}
+        ],
+        reversed: true,
+
+        labels: {
+            style: {
+                direction: "rtl",
+            },
+            align: 'top',
+
+        },
+    },
+
+    tooltip: {
+        pointFormat: ' <b>{point.y}</b>',
+    },
+
+    series: [
+            {
+                name: "مبلغ کل فاکتور(تومان)",
+                data: [
+                    {% for date, cost in orders_cost.items %}
+                        {{ cost|floatformat:"0" }},
+                    {% endfor %}
+                ]
+            },
+    ],
+
+});

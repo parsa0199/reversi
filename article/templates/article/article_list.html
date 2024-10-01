@@ -1,0 +1,157 @@
+{% extends "layouts/base.html" %}
+{% load static  %}
+
+{% block title %}
+    وبلاگ | {{site_info.name}}
+{% endblock %}
+
+{% block meta %}
+    <link rel="canonical" href="{{ request.build_absolute_uri }}" />
+    {% if page_obj.has_next %}
+        <link rel="next" href="blackdesiner.ir/blog/?page={{ page_obj.next_page_number }}" />
+    {% endif %}
+    <meta property="og:locale" content="fa_IR" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="Blog | {{site_info.name}}" />
+    <meta property="og:url" content="https://blackdesiner.ir/blog/" />
+    <meta property="og:site_name" content="{{site_info.name}}" />
+    <meta name="twitter:card" content="summary_large_image" />
+{% endblock meta %}
+
+
+{% block style %}
+
+{% endblock style %}
+
+{% block content %}
+{#<ul>#}
+{#  {% for tag in top_articles_tags %}#}
+{#    <li><a href="{% url 'articles:article-tag' tag.slug %}">{{ tag.title }}</a></li>#}
+{#  {% endfor %}#}
+{#</ul>#}
+
+    <main class="category-blog default space-top-30">
+        <div class="container ">
+
+            <div class="row">
+                <div class="col-12">
+                    <nav>
+                        <ul class="breadcrumb">
+                            <li>
+                                <i class="fa fa-home" aria-hidden="true"></i>
+                            </li>
+
+
+                            <li>
+                                <a href="#"><span>
+                                وبلاگ
+                            </span></a>
+                            </li>
+
+                        </ul>
+                    </nav>
+                </div>
+                <div class="single_blog_content cat_blog_content col-12 col-lg-9 mx-auto order-1 order-sm-1 ">
+
+
+
+                    <div class="row listing-items Blog-category">
+                        {% if articles %}
+
+                            {% for article in articles %}
+                                <div class="col-xl-6 col-lg-6 col-md-6 col-12  ">
+                                    <div class="blog_tag">
+                                        <a href="{{article.get_absolute_url}}">
+                                            <img src="{{article.thumbnail.url}}" class="img-fluid" alt="{{article.title}}" load="lazy">
+                                        </a>
+                                        <a href="{{article.get_absolute_url}}">
+                                            <h2 class="Blog_title">
+                                                {{article.title}}
+                                            </h2>
+                                        </a>
+                                        <div class="Blog_list">
+                                    <span class="Blog_author">
+                                        <i class="fa fa-user"></i>
+                                        {% if article.author %}
+                                        <a href="{% url 'article:author_articles' article.author %}">{{ article.author }}</a>
+                                        {% else %}
+{{site_info.name}}
+                                        {% endif %}
+                                    </span>
+                                            <span class="Blog_Date">
+                                        <i class="fa fa-calendar "></i>
+                                        {{article.get_created_at_jalali}}
+                                    </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        {% else %}
+                            <div class="col-12 text-center">
+                                <p>مقاله‌ای یافت نشد.</p>
+                            </div>
+                        {% endif %}
+
+                    </div>
+
+                    {% include 'includes/pagination.html' %}
+
+                </div>
+                <div class="col-12 col-lg-3 ">
+
+                    <div class="sidebar_blog">
+                        <div class="widget_blog">
+                            <div class="widget_blog_headbox">
+                                <h3> دسته بندی ها </h3>
+                            </div>
+                            <div class="blog_list_widget_blog">
+                                <div class="widget_blog_groups">
+                                    <ul class="widget_blog_posts">
+                                        {% for item in product_categories %}
+                                            <li><a href="{% url "products:products-category" item.slug %}"
+                                                   class="widget_blog_title_link"> {{ item.title }} </a></li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div><!-- end blog-list -->
+                        </div>
+                        <div class="widget_blog marg_top20">
+                            <div class="widget_blog_headbox">
+                                <h3>آخرین مقالات </h3>
+                            </div>
+                            <div class="blog_list_widget_blog">
+                                <div class="widget_blog_groups">
+                                    <ul class="widget_blog_posts">
+                                        {% if articles %}
+
+                                            {% for article in articles %}
+                                                <li>
+                                                    <a class="widget_blog_title_link" href="{{article.get_absolute_url}}">
+                                                        {{article.title}}
+                                                    </a>
+                                                </li>
+
+                                            {% endfor %}
+                                        {% else %}
+                                            <div class="col-12 text-center">
+                                                <p>مقاله‌ای یافت نشد.</p>
+                                            </div>
+                                        {% endif %}
+
+                                    </ul>
+                                </div>
+                            </div><!-- end blog-list -->
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+
+
+
+
+{% endblock content %}

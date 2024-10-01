@@ -1,0 +1,63 @@
+<!-- [ Team-leader section ] start -->
+    <div class="card-block team-leader">
+        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+            <h3 class="result-filters text-center mb-5 mt-3 text-dark font-20 ">
+                {% if '/reports/products/' in request.path %}
+                گزارش سبد خرید
+
+                {% elif '/reports/marketsize/' in request.path %}
+                گزارش سایز بازار
+
+                {% elif '/reports/marketshre/' in request.path %}
+                گزارش سهم بازار
+
+                {% elif '/reports/saleline-marketshre/' in request.path %}
+                گزارش سهم بازار روش خرید
+
+                {% elif '/reports/factories-marketshre/' in request.path %}
+                گزارش سهم بازار شرکت های تولیدی
+
+                {% elif '/reports/brand-marketshre/' in request.path %}
+                گزارش سهم بازار برند
+
+                {% elif '/reports/grouping-marketshre/' in request.path %}
+                گزارش سهم بازار (نوع و سایز) بسته بندی
+                {% endif %}
+            </h3>
+            <ol class="carousel-indicators carousel-indicators-numbers" dir="ltr">
+                <li id="carousel_page1" data-target="#carouselExampleIndicators" data-slide-to="0" class="active">1</li>
+                <li id="carousel_page2" data-target="#carouselExampleIndicators" data-slide-to="1">2</li>
+                <!-- <li data-target="#carouselExampleIndicators" data-slide-to="2">3</li> -->
+                <li id="openFullscreen" onclick="openFullscreen();">
+                    <i class="feather icon-maximize align-self-center"></i>
+                </li>
+                <li id="closeFullscreen" onclick="closeFullscreen();">
+                    <i class="feather icon-minimize align-self-center"></i>
+                </li>
+                <li id="printMenu"><i class="fas fa-download align-self-center"></i>
+                    <ul class=" menu-print ">
+                        <div style="top:-50px;left:-22px" class="d-flex position-absolute">
+                            <li class="px-1 mx-1" id="captureFullscreen">
+                                <i class="fa fa-image align-self-center"></i>
+                            </li>
+                            <li class="px-1 mx-1" id="pdfFullscreen">
+                                <i class="fa fa-file-pdf align-self-center"></i>
+                            </li>
+                        </div>
+                    </ul>
+                </li>
+
+                <div id="carousel-index" class="text-left pl-3 pt-2 pb-2" dir="rtl">
+                    <!-- Number will be added through JS over here -->
+                </div>
+
+            </ol>
+
+            <div class="carousel-inner"  id="myvideo" style="min-height:490px">
+                {% block charts %}{% endblock charts %}
+            </div>
+        </div>
+
+    </div>
+    <!-- [ Team-leader section ] end -->
+    <br>

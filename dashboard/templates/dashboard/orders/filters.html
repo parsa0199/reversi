@@ -1,0 +1,53 @@
+<form method="GET" action="." >
+    <div class="row justify-content-start align-items-center mb-3">
+        <div class="col-sm-2 d-flex justify-content-end">
+            <h5 class="text-info">فیلتر بر حسب:</h5>
+        </div>
+        <div class="col-sm-2 m-1">
+            <select name="user_filter" id="user_filter" class="form-select form-control">
+                <option value="all">همه کاربران</option>
+                {% for user in users %}
+                    <option value="{{ user.id }}" {% if request.GET.user_filter == user.id|stringformat:'i' %}selected{% endif %}>
+                        {{ user }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="col-sm-2 m-1">
+            <select name="is_paid" id="is_paid_filter" class="form-select">
+                <option value="None">وضعیت پرداخت (همه)</option>
+                <option value="True" {% if request.GET.is_paid == 'True' %}selected{% endif %}>پرداخت شده</option>
+                <option value="False" {% if request.GET.is_paid == 'False' %}selected{% endif %}>پرداخت نشده</option>
+            </select>
+        </div>
+
+        <div class="col-sm-2 m-1">
+            <select name="status" id="status_filter" class="form-select form-control">
+                <option value="all">وضعیت سفارش (همه)</option>
+                {% for status in shipping_status_list %}
+                    <option value="{{ status.0 }}" {% if request.GET.status == status.0 %}selected{% endif %}>
+                        {{ status.1 }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="col-sm-2 m-1">
+            <select name="delivery_option" id="delivery_option_filter" class="form-select form-control">
+                <option value="all">روش ارسال (همه)</option>
+                {% for delivery_option in delivery_option_list %}
+                    <option value="{{ delivery_option.0 }}" {% if request.GET.delivery_option == delivery_option.0 %}selected{% endif %}>
+                        {{ delivery_option.1 }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+        
+        <div class="col-sm-1   justify-content-end m-1">
+            <button type="submit" class="btn btn-info">فیلتر
+                <i class="fas fa-filter"></i>
+            </button>
+        </div>
+    </div>
+</form>

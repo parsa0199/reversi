@@ -1,0 +1,22 @@
+<form method="GET" action="." >
+    <div class="row  justify-content-start align-items-center mb-3">
+        <div class="col-sm-2 d-flex justify-content-end m-1">
+            <h5 class=" text-info">فیلتر بر حسب:</h5>
+        </div>
+
+        <div class="col-sm-2 m-1">
+            <select name="status" id="status" class="form-select">
+                <option value="all">وضعیت(همه)</option>
+                <option value="seen" {% if request.GET.status == 'seen' %}selected{% endif %}>خوانده شده</option>
+                <option value="not_seen" {% if request.GET.status == 'not_seen' %}selected{% endif %}>جدید </option>
+            </select>
+        </div>
+
+
+        <div class="col-sm-1   justify-content-end m-1">
+            <button type="submit" class="btn btn-info">فیلتر
+                <i class="fas fa-filter"></i>
+            </button>
+        </div>
+    </div>
+</form>

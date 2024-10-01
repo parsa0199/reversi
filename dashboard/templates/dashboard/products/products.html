@@ -1,0 +1,97 @@
+{% extends "dashboard/layouts/base.html" %}
+{% load static %}
+{% load humanize %}
+
+{% block title %}
+    لیست {{ object_name_fa_plural }}
+{% endblock %}
+
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{% static 'css/management/style.css' %}">
+    <style>
+
+    </style>
+{% endblock stylesheets %}
+
+
+{% block breadcrumb %}
+        <li class="breadcrumb-item"><a href="{{ request.path }}"> {{ object_name_fa_plural }}</a></li>
+{% endblock breadcrumb %}
+
+
+{% block content %}
+    <div class="main-body">
+        <div class="page-wrapper">
+            <div class="card card-default mt-2">
+                <div class="card-header">
+                    <h5>لیست {{ object_name_fa_plural }}</h5>
+                    <a href="#" class="text-info"  data-toggle="modal" title="ساخت محصول جدید"
+                       data-target="#item_add">
+                        <i class=" p-2 rounded rounded-4 border border-info fas fa-plus"></i>
+                    </a>
+                </div>
+                
+                <div class="card-body">
+                    {% include './filters.html' %}
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="row">
+                            <div class="col-md-12">
+                                {% include "./search.html" %}
+                            </div>
+                            <div class="col-sm-12 table-responsive" style="overflow-y:scroll;">
+                                <table id="sortable-table" class="table table-bordered" role="grid" aria-describedby="datatable-checkbox_info">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center">نام</th>
+                                            <th class="text-center" style='min-width:100px'>قیمت تک</th>
+                                            <th class="text-center" style='min-width:150px'>قیمت کارتن</th>
+                                            <th class="text-center" style='min-width:100px'>قیمت تخفیف دار تک</th>
+                                            <th class="text-center" style='min-width:150px'>قیمت تخفیف دار کارتن</th>
+                                            <th class="text-center" style='min-width:150px'>موجودی تک</th>
+                                            <th class="text-center" style='min-width:150px'>موجودی کارتن</th>
+                                            <th class="text-center" style='min-width:150px'>دسته بندی محصول</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for item in products %}
+                                        <tr data-id="{{ item.id }}">
+                                            <td class="text-center">
+                                                <a href="#" class="text-info font-weight-bold"  data-toggle="modal"
+                                                   data-target="#item_edit_{{ item.id }}">
+                                                    <img  src="{{ item.image.url }}" alt="{{ item.title }}" style="max-width: 10em;">
+                                                    <p class="m-2">
+                                                        {{ item.title|default:"_" }}
+                                                    </p>
+                                                </a>
+                                            </td>
+                                            <td class="text-center">{{ item.single_price|intcomma:False }} تومان</td>
+                                            <td class="text-center">{{ item.pack_price|intcomma:False|default:"_" }} تومان</td>
+                                            <td class="text-center">{{ item.single_discounted_price|intcomma:False }} تومان</td>
+                                            <td class="text-center">{{ item.pack_discounted_price|intcomma:False|default:"_" }} تومان</td>
+                                            <td class="text-center">{{ item.single_stock|default:"0"|intcomma:False }}</td>
+                                            <td class="text-center">{{ item.pack_stock|default:"0"|intcomma:False }}</td>
+                                            <td class="text-center">{{ item.product_categories.all|join:', ' }}</td>
+                                        </tr>
+                                        {% include './edit_product.html' %}
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                                {% include "includes/pagination.html" %}
+                                <span>{{ objects_count }} مورد یافت شد.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% include "./add_product.html" %}
+{% endblock content %}
+
+{% block javascripts %}
+
+
+
+{% endblock javascripts %}

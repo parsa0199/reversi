@@ -1,0 +1,22 @@
+body {
+	width: 70%;
+	margin: 0 auto;
+    background-color: #ecf0f1;
+}
+body h1 {
+    color: blue;
+}
+.popup-image {
+	width: 400px;
+	position: fixed;
+	bottom: 50%;
+	right: 30px;
+	display: block;
+	z-index: 999;
+}
+.popup-image img{
+    width: 100%;
+}
+.checkbox-field{
+    font-size: 20px;
+}

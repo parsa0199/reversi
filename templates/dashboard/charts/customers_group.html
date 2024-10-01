@@ -1,0 +1,120 @@
+var colors =  [
+'#0000FF',
+'#0080FF',
+'#00FFFF',
+'#00CCCC',
+'#80FF00',
+'#FFFF00',
+'#FF8000',
+'#FF0000',
+'#000099',
+];
+
+Highcharts.chart('customers_group_chart', {
+    series: [{
+        type: "treemap",
+        layoutAlgorithm: 'stripes',
+        alternateStartingDirection: true,
+        levels: [{
+            level: 1,
+            layoutAlgorithm: 'sliceAndDice',
+            dataLabels: {
+                enabled: false,
+                align: 'left',
+                verticalAlign: 'top',
+                style: {
+                    fontSize: '15px',
+                    fontWeight: 'bold'
+                }
+            }
+        }],
+        data: [
+        {% for item in characteristics_groups %}
+      {
+        name: '{{ item.group_name }}',
+        value: {{ item.customers_count }},
+        color: colors[{{ forloop.counter0 }}]
+      },
+      
+      {% endfor %}
+        {
+            id: '1',
+            name: '',
+            color: colors[0]
+        }, 
+        
+        {
+            id: '2',
+            name: '',
+            color: colors[1]
+        }, 
+        
+        {
+            id: '3',
+            name: '',
+            color: colors[2]
+        }, 
+
+        {
+            id: '4',
+            name: '',
+            color: colors[3]
+        },
+
+        {
+            id: '5',
+            name: '',
+            color: colors[4]
+        },
+
+        {
+            id: '6',
+            name: '',
+            color: colors[5]
+        },
+
+        {
+            id: '7',
+            name: '',
+            color: colors[6]
+        },
+
+        {
+            id: '8',
+            name: '',
+            color: colors[7]
+        },
+
+        {
+            id: '9',
+            name: '',
+            color: colors[8]
+        },
+
+        {
+            id: '10',
+            name: '',
+            color: colors[9]
+        },
+        
+        
+        {% for item in customers_group %}
+            {
+        name: '{{ item.group_name }}',
+        parent: '{{ item.group_num }}',
+        value: {{ item.customers_count }},
+            },
+        {% endfor %}
+        ]
+    }],
+    title: {
+        text: ''
+    },
+    tooltip: {
+        pointFormat: '<span>{point.value}</span> <br> <b>{point.name}</b>',
+    },
+
+    credits: {
+        enabled: false
+      },
+});

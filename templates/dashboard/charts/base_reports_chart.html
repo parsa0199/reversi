@@ -1,0 +1,65 @@
+            lang: {
+                decimalPoint: ',',
+                thousandsSep: '.'
+
+            },
+
+            chart: {
+                height: 480,
+                type: 'spline',
+            },
+
+            credits: {
+                enabled: false
+            },
+
+            legend: {
+                rtl: true,
+            },
+
+            tooltip: {
+                useHTML: true,
+                shared: true,
+                crosshairs: true,
+                style: {
+                    fontSize: '12px',
+                    fontFamily: 'Vazir',
+                    direction: 'rtl',
+                },
+                outside: true,
+                opacity: 1,
+                backgroundColor: "#fff",
+                borderRadius: 5,
+            },
+
+            legend: {
+                layout: 'vertical',
+                align: 'right',
+                verticalAlign: 'middle'
+            },
+
+            plotOptions: {
+                series: {
+                    dataLabels: {
+                        enabled: false
+                    }
+                },
+                column: {
+                    grouping: false
+                }
+            },
+
+            responsive: {
+                rules: [{
+                    condition: {
+                        maxWidth: 500
+                    },
+                    chartOptions: {
+                        legend: {
+                            layout: 'horizontal',
+                            align: 'center',
+                            verticalAlign: 'bottom'
+                        }
+                    }
+                }]
+            },

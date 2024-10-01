@@ -1,0 +1,111 @@
+{% load static %}
+
+<!--header area start-->
+
+{% comment %} <div class="top-section fullscreen-container">
+    <img src="{% static 'main/img/banners/header-banner.jpg' %}" class="h-100">
+</div> {% endcomment %}
+
+<nav class="navbar direction-ltr fixed-top header-responsive" style="height: 110px;">
+    <div class="container d-flex justify-content-between align-items-center">
+        <div class="navbar-translate">
+
+            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-bar bar1"></span>
+                <span class="navbar-toggler-bar bar2"></span>
+                <span class="navbar-toggler-bar bar3"></span>
+            </button>
+            <div class="search-nav default" style="opacity: 1; visibility: visible;">
+                <form action="">
+                    <input type="text" placeholder="جستجو ...">
+                    <button type="submit"><img src="{% static 'main/img/search.png' %}"  alt=""></button>
+                </form>
+            </div>
+        </div>
+
+        <div class="logo-nav-res text-center mx-auto">
+            <a href="/">
+                <img src="{% static 'new-theme/img/logo/logo.png' %}" alt="Aloroll" style="height: 80px;">
+            </a>
+        </div>
+
+        <div class="collapse navbar-collapse justify-content-end" id="navigation">
+            <ul class="navbar-nav default">
+                <li>
+                    <a href="{% url 'main:contact' %}">تماس با ما</a>
+                </li>
+                <li>
+                    <a href="{% url 'main:about' %}">درباره ما</a>
+                </li>
+                <li>
+                    <a href="{% url 'main:edu' %}">آموزش</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+{% if messages %}
+    <div id="myModal" class="modal-2" style="z-index:999">
+        <div class="modal-content-2">
+            <div id="messagesContent" style="text-align:center">
+                <span class="close-button-2">&times;</span>
+                <br>
+                {% for message in messages %}
+                    {% if message.tags != 'success' %}
+                        <div class="">
+                            <div class="tw-flex tw-justify-center">
+                                <img style="text-align:center;width:100px" src="{% static 'main/img/fail.gif' %}" />
+                            </div>
+                            <p{% if message.tags %} class="text text-{{message.tags }}"{% endif %}>{{ message }}</p>
+                        </div>
+                        <hr>
+                        <a href="{% url 'main:home' %}" class="btn btn-main-masai big_btn">بازگشت به خانه</a>
+                    {% else %}
+                        <div class="tw-flex tw-justify-center">
+                            <img style="text-align:center;width:100px" src="{% static 'main/img/checked.gif' %}" />
+                        </div>
+                        <p{% if message.tags %} class="text text-{{message.tags }}"{% endif %}>{{ message }}</p>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endif %}
+
+<div class="wrapper default">
+    <header class="Masai-header default">
+
+
+        <nav class="nav_header d-flex justify-content-center mb-2">
+
+            <ul class="nav__ullist">
+                <a href="/">
+                    <img src="{% static 'new-theme/img/logo/logo.png' %}" alt="" style="height: 80px;">
+                </a>
+                <li class="list_style">
+                    <i class="fa fa-credit-card " aria-hidden="true"></i><a href="/privacy" class="list__link">حریم خصوصی</a>
+                </li>
+                <li class="list_style">
+                    <i class="fa fa-phone " aria-hidden="true"></i>
+                    <a href="/تماس-با-ما/" class="list__link">تماس با ما</a>
+                </li>
+                <li class="list_style">
+                    <a href="/درباره-ما/" class="list__link">درباره ما</a>
+                </li>
+                <li class="list_style">
+                    <a href="{% url 'main:edu' %}" class="list__link">آموزش</a>
+            </ul>
+        </nav>
+
+            <div class="search-area mb-2 ">
+                <form action="" method="GET" class="search">
+                    <input type="text" name="search" placeholder="جستجو">
+                    <button type="submit"><img src="{% static 'main/img/search.png' %}" alt=""></button>
+                </form>
+            </div>
+    </header>
+</div>
+
+
+<!--header area end-->

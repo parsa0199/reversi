@@ -1,0 +1,248 @@
+<div class="modal-body">
+    <div class="row">
+        <!-- meta_title field -->
+        <div class="col-lg-6 mb-3">
+            <div class="form-group">
+                <label for="meta_title">*عنوان متا: </label>
+                <input type="text" class="form-control" id="meta_title" name="meta_title"
+                    {% if item.meta_title %}
+                        value="{{ item.meta_title }}"
+                    {% else %}
+                        value="{{ request.session.invalid_form_data.meta_title }}"
+                    {% endif %}
+                >
+            </div>
+        </div>
+        
+        <!-- meta_description field -->
+        <div class="col-lg-6 mb-3">
+            <div class="form-group">
+                <label for="meta_description">*توضیحات متا: </label>
+                <input type="text" class="form-control" id="meta_description" name="meta_description"
+                    {% if item.meta_description %}
+                        value="{{ item.meta_description|default:'_' }}"
+                    {% else %}
+                        value="{{ request.session.invalid_form_data.meta_description }}"
+                    {% endif %}
+                >
+            </div>
+        </div>
+
+        <!-- slug field -->
+        <div class="col-lg-4 mb-3">
+            <div class="form-group">
+                <label for="slug">پیوند یکتا: </label>
+                <input type="text" class="form-control" id="slug" name="slug"
+                    {% if item.slug %}
+                        value="{{ item.slug|default:'_' }}"
+                    {% else %}
+                        value="{{ request.session.invalid_form_data.slug }}"
+                    {% endif %}
+                >
+            </div>
+        </div>
+
+         <!-- image field -->
+         <div class="col-lg-4 mb-3">
+            <div class="form-group">
+                <label for="image">*عکس محصول: </label>
+                <input type="file" name="image" id="image">
+                {% if item.image %}
+                    <p class="pt-2"><a target="_blank" href="{{ item.image.url }}">عکس فعلی</a></p>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- title field -->
+        <div class="col-lg-4 mb-3">
+            <div class="form-group">
+                <label for="title">*نام محصول: </label>
+                <input type="text" class="form-control" id="title" name="title"
+                    {% if item.title %}
+                        value="{{ item.title|default:'_' }}"
+                    {% else %}
+                        value="{{ request.session.invalid_form_data.title }}"
+                    {% endif %}
+                >
+            </div>
+        </div>
+
+        <!-- description field -->
+        <div class="col-lg-12 mb-3">
+            <div class="form-group">
+                <label for="description">*توضیحات:‌ </label>
+                <textarea name="description" class="form-control ckeditor" id="description">{% if item.description %}{{ item.description|default:'_' }}{% else %}{{ request.session.invalid_form_data.description }}{% endif %}</textarea>
+            </div>
+        </div>
+
+        <!-- single_price field -->
+        <div class="col-lg-3 mb-3">
+            <div class="form-group">
+                <label for="single_price">*قیمت تک: </label>
+                <input type="number" class="form-control" id="single_price" name="single_price"
+                    {% if item.single_price %}
+                        value="{{ item.single_price|default:'0' }}"
+                    {% else %}
+                        value="{{ request.session.invalid_form_data.single_price }}"
+                    {% endif %}
+                >
+            </div>
+        </div>
+
+        <!-- pack_price field -->
+        <div class="col-lg-3 mb-3">
+            <div class="form-group">
+                <label for="pack_price">*قیمت کارتن: </label>
+                <input type="number" class="form-control" id="pack_price" name="pack_price"
+                    {% if item.pack_price %}
+                        value="{{ item.pack_price|default:'0' }}"
+                    {% else %}
+                        value="{{ request.session.invalid_form_data.pack_price }}"
+                    {% endif %}
+                >
+            </div>
+        </div>
+
+        <!-- single_discounted_price field -->
+        <div class="col-lg-3 mb-3">
+            <div class="form-group">
+                <label for="single_discounted_price">قیمت تخفیف دار تک: </label>
+                <input type="number" class="form-control" id="single_discounted_price" name="single_discounted_price"
+                    {% if item.single_discounted_price %}
+                        value="{{ item.single_discounted_price|default:'0' }}"
+                    {% else %}
+                        value="{{ request.session.invalid_form_data.single_discounted_price }}"
+                    {% endif %}
+                >
+            </div>
+        </div>
+
+        <!-- pack_discounted_price field -->
+        <div class="col-lg-3 mb-3">
+            <div class="form-group">
+                <label for="pack_discounted_price">قیمت تخفیف دار تک: </label>
+                <input type="number" class="form-control" id="pack_discounted_price" name="pack_discounted_price"
+                    {% if item.pack_discounted_price %}
+                        value="{{ item.pack_discounted_price|default:'0' }}"
+                    {% else %}
+                        value="{{ request.session.invalid_form_data.pack_discounted_price }}"
+                    {% endif %}
+                >
+            </div>
+        </div>
+
+        <!-- single_stock field -->
+        <div class="col-lg-3 mb-3">
+            <div class="form-group">
+                <label for="single_stock">*موجودی تک: </label>
+                <input type="number" class="form-control" id="single_stock" name="single_stock"
+                    {% if item.single_stock %}
+                        value="{{ item.single_stock|default:0 }}"
+                    {% else %}
+                        value="{{ request.session.invalid_form_data.single_stock|default:0 }}"
+                    {% endif %}
+                >
+            </div>
+        </div>
+
+        <!-- pack_stock field -->
+        <div class="col-lg-3 mb-3">
+            <div class="form-group">
+                <label for="pack_stock">*موجودی کارتن: </label>
+                <input type="number" class="form-control" id="pack_stock" name="pack_stock"
+                    {% if item.pack_stock %}
+                        value="{{ item.pack_stock|default:0 }}"
+                    {% else %}
+                        value="{{ request.session.invalid_form_data.pack_stock|default:0 }}"
+                    {% endif %}
+                >
+            </div>
+        </div>
+
+        <!-- weight field -->
+        <div class="col-lg-3 mb-3">
+            <div class="form-group">
+                <label for="weight">وزن: </label>
+                <input type="number" class="form-control" id="weight" name="weight"
+                    {% if item.weight %}
+                        value="{{ item.weight|default:0 }}"
+                    {% else %}
+                        value="{{ request.session.invalid_form_data.weight|default:0 }}"
+                    {% endif %}
+                >
+            </div>
+        </div>
+
+        <!-- pack_weight field -->
+        <div class="col-lg-3 mb-3">
+            <div class="form-group">
+                <label for="pack_weight">وزن کارتن: </label>
+                <input type="number" class="form-control" id="pack_weight" name="pack_weight"
+                    {% if item.pack_weight %}
+                        value="{{ item.pack_weight|default:0 }}"
+                    {% else %}
+                        value="{{ request.session.invalid_form_data.pack_weight|default:0 }}"
+                    {% endif %}
+                >
+            </div>
+        </div>
+
+        <!-- related_products field -->
+        <div class="col-lg-6 mb-3">
+            <div class="form-group">
+                <label for="related_products">*محصولات مرتبط: </label>
+                <div class="col-sm m-1">
+                    <select name="related_products" id="related_products-{{ item.id }}" class="form-select form-control" multiple>
+                        {% for product in products %}
+                            <option value="{{ product.id }}"
+                                    {% for prod in item.related_products.all %}
+                                    {% if product == prod %}selected{% endif %}
+                                    {% endfor %}
+                            >
+                                {{ product.title }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- product_categories field -->
+        <div class="col-lg-6 mb-3">
+            <div class="form-group">
+                <label for="product_categories">*دسته بندی ها: </label>
+                <div class="col-sm m-1">
+                    <select name="product_categories" id="product_categories-{{ item.id }}" class="form-select form-control" multiple>
+                        {% for category in categories %}
+                            <option value="{{ category.id }}"
+                                    {% for cat in item.product_categories.all %}
+                                    {% if category == cat %}selected{% endif %}
+                                    {% endfor %}
+                            >
+                                {{ category.title }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- is_active field -->
+        <div class="col-lg-4 mb-3">
+            <div class="form-group">
+                <label for="is_active-{{ item.id }}">*وضعیت محصول:</label>
+                <div class="col-sm ">
+                    <select name="is_active" id="is_active-{{ item.id }}" class="form-select form-control">
+                        <option value="True" {% if item.is_active == True %} selected {% endif %}>فعال</option>
+                        <option value="False" {% if item.is_active == False %} selected {% endif %}>غیرفعال</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+    <div class="text-center">
+        <button type="submit" class="btn btn-info">ثبت کنید</button>
+    </div>
+</div>

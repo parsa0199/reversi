@@ -1,0 +1,121 @@
+{% comment %} Search Filtering {% endcomment %}
+<div class="collapse" id="ProSearch" style="">
+    <h5 class="text-center pt-4">
+        <i class="feather icon-search"></i>
+        جست‌وجو:</h5>
+    <div class="card-body px-2">
+        <form method='GET' action=".">
+            <input type="hidden" name="filtering" value="True">
+            <div class="row">
+                <div class="col-lg-4 col-md-4 col-12">
+                    <div class="form-group">
+                        <label for="product_id">شناسه محصول</label>
+                        <input type="number" name="product_id" class="form-control" id="product_id" dir="ltr"
+                               value="{{ request.GET.product_id }}">
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-4 col-12">
+                    <div class="form-group">
+                        <label for="title">نام محصول</label>
+                        <input type="text" name="title" class="form-control" id="title" value="{{ request.GET.title }}">
+                    </div>
+                </div>
+
+
+                <div class="col-lg-4 col-md-4 col-12">
+                    <div class="form-group">
+                        <label for="paginate_by">نمایش در هر صفحه</label>
+                        <select class="js-example-basic-single" id="paginate_by" name="paginate_by">
+                            <option></option>
+                            <option {% if request.GET.paginate_by == "10" %}selected{% endif %} value=10>10</option>
+                            <option {% if request.GET.paginate_by == "20" %}selected{% endif %} value=20>20</option>
+                            <option {% if request.GET.paginate_by == "50" %}selected{% endif %} value=50>50</option>
+                            <option {% if request.GET.paginate_by == "100" %}selected{% endif %} value=100>100</option>
+                            <option {% if request.GET.paginate_by == "200" %}selected{% endif %} value=200>200</option>
+                            <option {% if request.GET.paginate_by == "500" %}selected{% endif %} value=500>500</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <button type="submit" class="btn btn-success d-flex">جست‌وجو کنید</button>
+                </div>
+
+            </div>
+    </div>
+</div>
+
+
+<div class="collapse" id="ProFilter" style="">
+    <h5 class="text-center pt-4">
+        <i class="feather icon-filter"></i>
+        فیلتر:</h5>
+    <div class="card-body px-2">
+        <form method='GET' action=".">
+            <input type="hidden" name="filtering" value="True">
+            <div class="row justify-content-center">
+                <div class="col-lg-3 col-md-4 col-12">
+                    <div class="form-group shadow-sm py-4 px-2 rounded">
+                        <label class="d-flex justify-content-center font-weight-bold" for="product_prices">قیمت فروش باکس</label>
+                        <div class="price_filter" dir="ltr">
+								<label class="price_filter__label">
+									<input type="text" name="box_price_min"
+										class="price_filter__input price_filter__input0">
+								</label>
+
+								<label class="price_filter__label">
+									<input type="text" name="box_price_max"
+										class="price_filter__input price_filter__input0">
+								</label>
+
+								<div id="sliderPrice0" class="sliderPrice price_filter__slider-price"
+									data-min="{{ product_prices.box_price__min|default:"0" }}"
+									data-max="{{ product_prices.box_price__max }}" data-step="10000">
+								</div>
+								<span class="d-none"
+									id="price_filtered_min_0">{{ filtered_box_price_min|default:product_prices.box_price__min|default:"0" }}</span>
+								<span class="d-none"
+									id="price_filtered_max_0">{{ filtered_box_price_max|default:product_prices.box_price__max }}</span>
+							</div>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-4 col-12">
+                    <div class="form-group shadow-sm py-4 px-2 rounded">
+                        <label class="d-flex justify-content-center font-weight-bold" for="product_prices2">قیمت فروش</label>
+                        <div class="price_filter" dir="ltr">
+								<label class="price_filter__label">
+									<input type="text" name="price_min"
+										class="price_filter__input price_filter__input1">
+								</label>
+
+								<label class="price_filter__label">
+									<input type="text" name="price_max"
+										class="price_filter__input price_filter__input1">
+								</label>
+
+								<div id="sliderPrice1" class="sliderPrice price_filter__slider-price"
+									data-min="{{ product_prices.price__min|default:"0" }}"
+									data-max="{{ product_prices.price__max }}" data-step="10000">
+								</div>
+								<span class="d-none"
+									id="price_filtered_min_1">{{ filtered_normal_price_min|default:product_prices.price__min|default:"0" }}</span>
+								<span class="d-none"
+									id="price_filtered_max_1">{{ filtered_normal_price_max|default:product_prices.price__max }}</span>
+							</div>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <button type="submit" class="btn btn-dark d-flex mx-auto">فیلتر کنید</button>
+                </div>
+
+            </div>
+    </div>
+</div>
+
+{% comment %} Order Filtering {% endcomment %}
+{% include 'filters/ordering.html' %}
+
+</form>

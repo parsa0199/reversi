@@ -1,0 +1,111 @@
+{% comment %} Search Filtering {% endcomment %}
+<div class="collapse" id="ProSearch" style="">
+    <h5 class="text-center pt-4">
+        <i class="feather icon-search"></i>
+        جست‌وجو:</h5>
+    <div class="card-body px-2">
+        <form method='GET' action=".">
+            <input type="hidden" name="filtering" value="True">
+            <div class="row">
+                <div class="col-lg-2 col-md-4 col-12">
+                    <div class="form-group">
+                        <label for="customer_id">شناسه مشتری</label>
+                        <input type="number" name="customer_id" class="form-control" id="customer_id" dir="ltr"
+                               value={{ request.GET.customer_id }}>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-4 col-12">
+                    <div class="form-group">
+                        <label for="customer_name">نام مشتری</label>
+                        <input type="text" name="customer_name" class="form-control" id="customer_name"
+                               value="{{ request.GET.customer_name }}">
+                    </div>
+                </div>
+
+                <div class="col-lg-2 col-md-4 col-12">
+                    <div class="form-group">
+                        <label for="order_id">شماره فاکتور</label>
+                        <input type="text" name="order_id" class="form-control" id="order_id" dir="ltr"
+                               value="{{ request.GET.order_id }}">
+                    </div>
+                </div>
+
+                <div class="col-lg-2 col-md-4 col-12">
+                    <div class="form-group">
+                        <label for="score_type">نوع امتیاز</label>
+                        <select class="js-example-basic-single" id="score_type" name="score_type">
+                            <option></option>
+                            <option {% if request.GET.score_type == "orders" %}selected{% endif %} value='orders'>در ازای خرید</option>
+                            <option {% if request.GET.score_type == "comments" %}selected{% endif %} value='comments'>ثبت نظر از سایت</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-4 col-12">
+                    <div class="form-group">
+                        <label for="paginate_by">نمایش در هر صفحه</label>
+                        <select class="js-example-basic-single" id="paginate_by" name="paginate_by">
+                            <option></option>
+                            <option {% if request.GET.paginate_by == "10" %}selected{% endif %} value=10>10</option>
+                            <option {% if request.GET.paginate_by == "20" %}selected{% endif %} value=20>20</option>
+                            <option {% if request.GET.paginate_by == "50" %}selected{% endif %} value=50>50</option>
+                            <option {% if request.GET.paginate_by == "100" %}selected{% endif %} value=100>100</option>
+                            <option {% if request.GET.paginate_by == "200" %}selected{% endif %} value=200>200</option>
+                            <option {% if request.GET.paginate_by == "500" %}selected{% endif %} value=500>500</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <button type="submit" class="btn btn-success d-flex">جست‌وجو کنید</button>
+                </div>
+
+            </div>
+    </div>
+</div>
+
+<div class="collapse" id="ProFilter" style="">
+    <h5 class="text-center pt-4">
+        <i class="feather icon-filter"></i>
+        فیلتر:</h5>
+    <div class="card-body px-2">
+        <form method='GET' action=".">
+            <input type="hidden" name="filtering" value="True">
+            <div class="row justify-content-center">
+                <div class="col-lg-6 col-12 my-3">
+                    <div class="row bg-light py-3 shadow-sm rounded d-flex mx-1">
+                        <div class="col-12 mb-2">
+                            <span class="font-14 text-dark font-weight-bold
+                                        d-flex justify-content-center">تاریخ ایجاد</span>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label class="text-muted d-flex justify-content-center">از</label>
+                                <input class="form-control text-center" data-jdp
+                                       name="date_created_from" value="{{ request.GET.date_created_from }}">
+                            </div>
+                        </div>
+
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label class="text-muted d-flex justify-content-center">تا</label>
+                                <input class="form-control text-center" data-jdp
+                                       name="date_created_to" value="{{ request.GET.date_created_to }}">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-md-12">
+                    <button type="submit" class="btn btn-dark d-flex mx-auto">فیلتر کنید</button>
+                </div>
+
+            </div>
+    </div>
+</div>
+
+{% comment %} Order Filtering {% endcomment %}
+{% include 'filters/ordering.html' %}
+</form>

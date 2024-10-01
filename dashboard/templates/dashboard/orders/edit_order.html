@@ -1,0 +1,98 @@
+<!-- Start of edit model -->
+<div class="modal fade" id="item_edit_{{ item.id }}" tabindex="-1" aria-labelledby="item_edit_title" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="question_edit_title">ویرایش {{ object_name_fa }}</h5>
+            </div>
+
+            <form action="{% url 'dashboard:update-order' item.pk %}"
+                  method="POST" enctype="multipart/form-data" novalidate>
+                {% if form.non_field_errors %}
+                    <div class="alert alert-danger">
+                        <ul class="errorlist">
+                            {% for error in form.non_field_errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
+                
+                {% csrf_token %}
+                {% include "dashboard/orders/order_fields.html" %}
+            </form>
+        </div>
+    </div>
+</div>
+<!-- End of edit modal -->
+{% block javascripts %}
+<script>
+    // Function to convert and format dates and times
+    function convertDateTime(inputElement, inputElement2) {
+        var jalaliDateTime = inputElement.value.trim();
+        console.log('Original Jalali DateTime:', jalaliDateTime);
+
+        // Split the input into date and time parts
+        var [jalaliDate, time] = jalaliDateTime.split(' ');
+
+        // Parse the Jalali date in the format "1403/03/15"
+        var parts = jalaliDate.split('/');
+        if (parts.length === 3) {
+            var year = parseInt(parts[0], 10);
+            var month = parseInt(parts[1], 10);
+            var day = parseInt(parts[2], 10);
+            console.log('Parsed Year:', year, 'Month:', month, 'Day:', day);
+
+            // Validate the parsed values
+            if (year > 0 && month > 0 && month <= 12 && day > 0 && day <= 31) {
+                try {
+                    // Convert the Jalali date to Gregorian
+                    var gregorianDate = jalaali.toGregorian(year, month, day + 1);
+                    console.log('Gregorian Date Object:', gregorianDate);
+
+                    // Format Gregorian date to "YYYY-MM-DD"
+                    var formattedDate = [
+                        gregorianDate.gy,
+                        ('0' + gregorianDate.gm).slice(-2),
+                        ('0' + gregorianDate.gd).slice(-2)
+                    ].join('-');
+
+                    // If time is provided, append it to the formatted date
+                    if (time) {
+                        formattedDate += ' ' + time;
+                    } else {
+                        // If no time is provided, default to midnight
+                        formattedDate += ' 00:00';
+                    }
+                    console.log('Formatted Gregorian DateTime:', formattedDate);
+
+                    // Set the value to the input field
+                    inputElement2.value = formattedDate;
+                } catch (e) {
+                    console.error('Error during conversion:', e);
+                }
+            } else {
+                console.error('Invalid date components:', year, month, day);
+            }
+        } else {
+            console.error('Invalid date format:', jalaliDate);
+        }
+    }
+
+
+    document.addEventListener('DOMContentLoaded', function() {
+        // Attach event listeners to both input fields
+        var paidTime = document.getElementById('paid-time-{{ item.id }}');
+        
+        var userPaidTime = document.getElementById('user-paid-time-{{ item.id }}');
+
+
+        userPaidTime.addEventListener('change', () => {
+            convertDateTime(userPaidTime, paidTime);
+        });
+
+        convertDateTime(userPaidTime, paidTime);
+    });
+
+</script>
+{% endblock javascripts %}

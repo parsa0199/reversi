@@ -1,0 +1,32 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reversi Game</title>
+    <link rel="stylesheet" href="{% static 'game/css/styles.css' %}">
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="{% url 'game:game_list' %}">Home</a>
+            <a href="{% url 'game:new_game' %}">Start New Game</a>
+        </nav>
+    </header>
+
+    <main>
+        <h1>Reversi Game</h1>
+        <div id="board"></div>
+        <div id="info">
+            <p>Current Player: <span id="current-player">Black</span></p>
+            <button id="restart">Restart Game</button>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Reversi Game</p>
+    </footer>
+    <script src="{% static 'game/js/script.js' %}"></script>
+</body>
+</html>

@@ -1,0 +1,135 @@
+{% extends 'layouts/base.html' %}
+{% load static  %}
+{% block title %}
+    {{ article.meta_title }} | فروشگاه اینترنتی الورول
+{% endblock title %}
+
+{% block css %}
+
+
+
+<style>
+    
+</style>
+{% endblock css %}
+
+{% block meta %}
+    <meta name="keywords" content="{{ article.meta_title }}">
+    <meta property="og:title" content="{{ article.meta_title }}"/>
+    <meta name="description" content="{{ article.meta_description }}" />
+    <meta property="og:locale" content="fa_IR" />
+    <meta property="og:type" content="article" />
+    <meta property="og:description" content="{{ article.meta_description }}"/>
+    <meta property="og:site_name" content="فروشگاه اینترنتی الورول" />
+    <meta name="twitter:card" content="summary_large_image" />
+{% endblock meta %}
+
+{% block content %}
+
+
+    <main class="cart-page default ">
+        <div class="container">
+            <div class="row">
+
+                <div class="single_blog_content col-12 col-lg-9 mx-auto">
+                    <header class="card-header">
+                        <h1 class="card-title font-weight-bold font-18">
+                            {{ article.meta_title }}
+                        </h1>
+                    </header>
+                    <div class="single_blog_page">
+
+                        <div class="single_blog_box_content">
+                            <form class="form-account">
+                                <div class="row">
+
+                                    <div class="col-md-12 col-sm-12">
+
+                                        <img src="{{ article.thumbnail.url }}" style="width:800px;height:500px" />
+                                        <div class="data_det">
+                                        <span class="publish_date">
+                                            <i class="fa fa-clock"></i>
+                                            {{ article.get_created_at }}
+                                        </span>
+                                            <span class="author">
+                                            <i class="fa fa-user-alt"></i>
+                                                {%  if article.author %}
+                                                    <a href="{% url 'article:author_articles' article.author %}">{{ article.author }}</a>
+                                                {% else %}
+                                                    فروشگاه اینترنتی الورول
+                                                {% endif %}
+                                        </span>
+                                            <span class="categoey">
+                                            <i class="fa fa-folder"></i>
+                                            <a href="{% url 'article:articles' %}" rel="category tag">مقالات</a>
+                                        </span>
+                                            <span class="visitors">
+                                            <i class="fa fa-eye"></i> 1725 بازدید
+                                        </span>
+                                        </div>
+                                        <div class="text-justify single_blog_page">
+                                            {{ article.body | safe }}
+                                        </div>
+
+                                    </div>
+
+
+
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-12 col-lg-3">
+
+                    <div class="sidebar_blog">
+                        <div class="widget_blog">
+                            <div class="widget_blog_headbox">
+                                <h3> دسته بندی ها </h3>
+                            </div>
+                            <div class="blog_list_widget_blog">
+                                <div class="widget_blog_groups">
+                                    <ul class="widget_blog_posts">
+                                        <ul>
+                                            {% for category in top_categories %}
+                                                <li>
+                                                    <a class="widget_blog_title_link" href="{% url 'article:articles' %}?category={{ category.slug }}">{{ category.title }}</a>
+                                                </li>
+                                            {% endfor %}
+                                        </ul>
+
+                                    </ul>
+
+                                </div>
+                            </div><!-- end blog-list -->
+                        </div>
+                        <div class="widget_blog marg_top20">
+                            <div class="widget_blog_headbox">
+                                <h3>آخرین مقالات </h3>
+                            </div>
+                            <div class="blog_list_widget_blog">
+                                <div class="widget_blog_groups">
+                                    <ul class="widget_blog_posts">
+                                        {% for article in last_articles %}
+                                            <li><a class="widget_blog_title_link" href="{{article.get_absolute_url}}"> {{article.title}}</a></li>
+                                        {% endfor%}
+                                    </ul>
+                                </div>
+                            </div><!-- end blog-list -->
+                        </div>
+
+                    </div>
+                </div>
+
+
+
+
+            </div>
+        </div>
+
+    </main>
+
+
+{% endblock content %}

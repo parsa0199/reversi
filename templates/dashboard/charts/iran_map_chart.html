@@ -1,0 +1,69 @@
+{% load dashboard_index %}
+
+Highcharts.mapChart('iran_map_chart', {
+chart: {
+    map: 'countries/ir/ir-all',
+    height: 480,
+},
+
+plotOptions: {
+    series: {
+        point: {
+            events: {
+                click: function () {
+                    location.href = 'https://en.wikipedia.org/wiki/' + this.dataLabels.name;
+                }
+            }
+        },
+    }
+},
+
+lang: {
+    zoomIn: 'افزایش بزرگنمایی',
+    zoomOut: 'کاهش بزرگنمایی',
+  },
+
+title: {
+    text: 'پراکندگی مشتریان در استان‌های کشور',
+    y: 20,
+},
+
+subtitle: {
+    text: ''
+},
+
+mapNavigation: {
+    enabled: true,
+    buttonOptions: {
+        verticalAlign: 'bottom'
+    }
+},
+
+colorAxis: {
+    min: 0,
+    minColor: '#c7a9ff',
+    maxColor: '#4c3d66',
+},
+
+series: [{
+    data: [
+        {% for data in customers_dispersion %}
+        ['{{ data.state|get_state }}', {{ data.state__count }}],
+        {% endfor %}
+    ],
+
+    name: 'پراکندگی',
+    cursor: 'pointer',
+    states: {
+        hover: {
+            color: 'pink'
+        }
+    },
+
+    dataLabels: {
+        enabled: false,
+        format: '{point.name}'
+    },
+    {% include 'includes/iran_city_names_map.html' %}
+}]
+});

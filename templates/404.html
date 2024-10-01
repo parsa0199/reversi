@@ -1,0 +1,99 @@
+{% extends "layouts/base.html" %}
+{% load custom_filters %}
+
+
+{% load static %}
+
+{% block title %}
+    فروشگاه | الورول
+{% endblock title %}
+{% block style %}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+
+{% endblock style %}
+
+
+{% block content %}
+
+
+
+<main class="cart-page">
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 mt-4">
+                <h1>
+                    صفحه مورد نظر یافت نشد!
+                </h1>
+            </div>
+        </div>
+      <div class="row">
+          <div class="contact_us_content col-12 mx-auto">
+              <header class="card-header">
+                  <h3 style="" class="card-title"><span>
+                    لیست دسته بندی های الورول
+                  </span>
+                </h3>
+              </header>
+              <div class="container">
+  
+                  <div class="">
+                    <div class="row">
+                        {% for category in product_category_without_parent %}
+                            <div class="col-md-5 card p-4 m-4">
+                                <h2 style="font-size:17px">
+                                    خرید محصولات {{ category.title }}
+                                </h2>
+                               
+                                <table class="table table-hover">
+                                    <tr>
+                                        <td>
+                                            <a href="{% url 'products:products-category' category.slug %}" class="">{{ category.title }}</a>
+                                        </td>
+                                    </tr>
+                                    {% for sub_cat in category.subcategories.all %}
+                                        <tr>
+                                            <td>
+                                                <a href="{% url 'products:products-category-2' category.slug sub_cat.slug %}" class="">{{ sub_cat.title }}</a>
+                                            </td>
+                                        </tr>
+                                          
+                                    {% endfor %}
+                                    
+                                </table>
+                                <div>
+                                    <ul class="">
+                                        
+
+                                    </ul>
+                                </div>
+                            </div>
+                           
+                        {% endfor %}
+                       
+                    </div>
+                   
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+  
+</main>
+  
+{% comment %}   
+
+{% for category in product_category_without_parent %}
+
+<a href="{{ category.get_absolute_url }}">
+    {{ category.title }}
+</a>
+
+{% endfor %} {% endcomment %}
+
+
+{% endblock content %}
+{% block js %}
+
+    
+{% endblock js %}

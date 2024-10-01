@@ -1,0 +1,14 @@
+<div class="mb-4">
+    <form method="GET" action=".">
+        <div class="d-flex justify-content-start align-items-center">
+            <div class="m-1 w-25">
+                <input type="text" name="search" id="search" class="form-control" placeholder="کد سفارش را وارد کنید" value="{{ request.GET.search }}">
+            </div>
+            <div class="m-1">
+                <button type="submit" class="btn btn-info">جستجو
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+        </div>
+    </form>
+</div>

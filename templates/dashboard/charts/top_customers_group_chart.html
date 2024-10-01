@@ -1,0 +1,84 @@
+var colors =  [
+'#000066',
+'#004C99',
+'#00FF80',
+'#00FF00',
+'#80FF00',
+'#FFFF00',
+'#FF8000',
+'#FF0000',
+'#606060',
+];
+
+Highcharts.chart('top_customers_group_chart', {
+    chart: {
+      type: 'bar',
+      height: 480,
+    },
+    
+    title: {
+      text: 'گروه‌بندی مشتریان',
+      y: 20,
+    },
+
+    xAxis: {
+      type: 'category',
+      title: {
+        text: null
+      }
+    },
+
+    yAxis: {
+      min: 0,
+      title: {
+        text: 'تعداد',
+        align: 'high'
+      },
+      labels: {
+        overflow: 'justify'
+      }
+    },
+    tooltip: {
+     
+  },
+    plotOptions: {
+      bar: {
+        dataLabels: {
+          enabled: true
+        }
+      }
+    },
+    legend: {
+      layout: 'vertical',
+      align: 'right',
+      verticalAlign: 'top',
+      x: -40,
+      y: 80,
+      floating: true,
+      borderWidth: 1,
+      backgroundColor:
+        Highcharts.defaultOptions.legend.backgroundColor || '#FFFFFF',
+      shadow: true
+    },
+    credits: {
+      enabled: false
+    },
+    series: [{
+      showInLegend: false, 
+      name: '',
+      data: [
+      {% for item in customers_group %}
+      {
+        name: '<a href="{% url 'customers:characteristics-group' %}?group_num={{ item.group_num }}">{{ item.group_name }}</a>',
+        y: {{ item.customers_count }},
+        color: colors[{{ forloop.counter0 }}]
+      },
+      {% endfor %}
+      {
+        name: '<a href="{% url 'customers:customers' %}?filtering=True&buyproduct=0">بدون سابقه خرید</a>',
+        y: {{ not_buyproduct_customers }},
+        color: colors.slice(-1)[0] 
+      },
+      ]
+    }]
+  });

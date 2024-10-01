@@ -1,0 +1,191 @@
+<div class="modal-body">
+    <div class="row">
+        <!-- code field -->
+        <div class="col-lg-4 mb-3">
+            <div class="form-group">
+                <label for="code">کد:</label>
+                <input type="text" class="form-control" id="code" name="code"
+                        {% if item.code %}
+                       value="{{ item.code|default:'' }}"
+                        {% else %}
+                       value="{{ request.session.invalid_form_data.code|default:'' }}"
+                        {% endif %}
+                >
+
+            </div>
+            <div class="col-12 pb-3 m-1 "><i class="fas fa-info-circle text-info"> اگر کد را خالی بگذارید به صورت خودکار پر خواهد شد</i></div>
+
+        </div>
+
+        <!-- discount field -->
+        <div class="col-lg-4 mb-3">
+            <div class="form-group">
+                <label for="discount">مبلغ تخفیف (تومان):</label>
+                <input type="number" class="form-control" id="discount" name="discount"
+                        {% if item.discount %}
+                       value="{{ item.discount|default:'0' }}"
+                        {% else %}
+                       value="{{ request.session.invalid_form_data.discount }}"
+                        {% endif %}
+                >
+            </div>
+        </div>
+
+        <!-- usage limit field -->
+        <div class="col-lg-4 mb-3">
+            <div class="form-group">
+                <label for="usage_limit">سقف استفاده مجاز:</label>
+                <input type="number" class="form-control" id="usage_limit" name="usage_limit"
+                        {% if item.usage_limit %}
+                       value="{{ item.usage_limit|default:'0' }}"
+                        {% else %}
+                       value="{{ request.session.invalid_form_data.usage_limit }}"
+                        {% endif %}
+                >
+                <input type="hidden" id="valid_to_gregorian" name="valid_to_gregorian" />
+            </div>
+        </div>
+
+        <!-- valid from field -->
+        <div class="col-lg-6 mb-3">
+            <div class="form-group">
+                <label for="valid_from-{{ item.id }}">*اعتبار از:</label>
+                <input id="valid_from-{{ item.id }}" name="valid_from" data-jdp data-jdp-min-date="today"
+                       placeholder="{{ item.get_valid_from_jalali|default:'روز/ماه/سال' }}"
+                       value="{{ item.get_valid_from_jalali }}"
+                       class="tw-w-full tw-rounded-md tw-p-2 inputspage1 form-control" type="text"
+                       required
+                       style="display: none;"
+                />
+                <input id="user-valid_from-{{ item.id }}" data-jdp data-jdp-min-date="today"
+                       placeholder="{{ item.get_valid_from_jalali|default:'روز/ماه/سال' }}"
+                        {% if item.valid_from %}
+                       value="{{ item.get_valid_from_jalali }}"
+                        {% else %}
+                       value="{{ request.session.invalid_form_data.valid_from }}"
+                        {% endif %}
+                       class="tw-w-full tw-rounded-md tw-p-2 inputspage1 form-control" type="text"
+                       required
+                       autocomplete="off"
+                />
+            </div>
+        </div>
+
+        <!-- valid to field -->
+        <div class="col-lg-6 mb-3">
+            <div class="form-group">
+                <label for="valid_to-{{ item.id }}">*اعتبار تا:</label>
+                <input id="valid_to-{{ item.id }}" name="valid_to" data-jdp
+                       data-jdp-min-date="today"
+                       placeholder="{{ item.get_valid_to_jalali|default:'روز/ماه/سال' }}"
+                       class="tw-w-full tw-rounded-md tw-p-2 inputspage1 form-control" type="text"
+                       value="{{ item.get_valid_to_jalali }}"
+                       required
+                       style="display: none;"
+                />
+                <input id="user-valid_to-{{ item.id }}" data-jdp
+                       data-jdp-min-date="today"
+                       placeholder="{{ item.get_valid_to_jalali|default:'روز/ماه/سال' }}"
+                       class="tw-w-full tw-rounded-md tw-p-2 inputspage1 form-control" type="text"
+                        {% if item.valid_to %}
+                       value="{{ item.get_valid_to_jalali }}"
+                        {% else %}
+                       value="{{ request.session.invalid_form_data.valid_to }}"
+                        {% endif %}
+                       required
+                       autocomplete="off"
+                />
+            </div>
+
+        </div>
+
+        <div class="col-12 pb-3 text-info"><i class="fas fa-info-circle"> در صورتی که هیچ دسته یا محصولی انتخاب نشود؛ کوپن بر همه ی دسته ها یا محصولات اعمال پذیر خواهد بود</i></div>
+        <!-- applicable_categories field -->
+        <div class="col-lg-6 mb-3">
+            <div class="form-group">
+                <label for="applicable_categories">دسته های اعمال پذیر:</label>
+                <div class="col-sm m-1">
+                    <select name="applicable_categories" id="applicable_categories-{{ item.id }}" class="form-select form-control" multiple>
+                        {% for category in categories %}
+                            <option value="{{ category.id }}"
+                                    {% for cat in item.applicable_categories.all %}
+                                        {% if category == cat %} selected {% endif %}
+                                    {% endfor %}
+                            >
+                                {{ category.title }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- applicaple_products field -->
+        <div class="col-lg-6 mb-3">
+            <div class="form-group">
+                <label for="applicable_products-{{ item.id }}">محصولات اعمال پذیر:</label>
+                <div class="col-sm m-1">
+                    <select name="applicable_products" id="applicable_products-{{ item.id }}" class="form-select form-control" multiple>
+                        {% for product in products %}
+                            <option value="{{ product.id }}"
+                                    {% for prod in item.applicable_products.all %}
+                                        {% if product == prod %} selected {% endif %}
+                                    {% endfor %}
+                            >
+                                {{ product.title }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+        </div>
+
+
+
+        <!-- user_condition field -->
+        <div class="col-lg-6 mb-3">
+            <div class="form-group">
+                <label for="user_condition-{{ item.id }}">*ویژگی کاربران اعمال پذیر</label>
+                <div class="col-sm m-1">
+                    <select name="user_condition" id="user_condition-{{ item.id }}" class="form-select form-control">
+                        <option value="ALL_USERS" {% if item.user_condition == 'ALL_USERS' %} selected {% endif %}>همه کاربران</option>
+                        <option value="MIN_PURCHASES_3" {% if item.user_condition == 'MIN_PURCHASES_3' %} selected {% endif %}>کاربران با حداقل ۳ سابقه خرید</option>
+                        <option value="MIN_PURCHASES_1" {% if item.user_condition == 'MIN_PURCHASES_1' %} selected {% endif %}>کاربران با 1 سابقه خرید</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <!-- coupon_type field -->
+        <div class="col-lg-6 mb-3">
+            <div class="form-group">
+                <label for="coupon_type-{{ item.id }}">نوع کوپن</label>
+                <div class="col-sm m-1">
+                    <select name="coupon_type" id="coupon_type-{{ item.id }}" class="form-select form-control">
+                        <option value="#" {% if  not item.coupon_type %} selected {% endif %}>معمولی</option>
+                        <option value="PRICE_BASE" {% if item.coupon_type == 'PRICE_BASE' %} selected {% endif %}>بر اساس مبلغ خرید کاربر تخفیف تعیین میشود</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- avtive field -->
+        <div class="col-lg-6 mb-3">
+            <div class="form-group">
+                <label for="active-{{ item.id }}">*وضعیت فعال بودن:</label>
+                <div class="col-sm">
+                    <select name="active" id="active-{{ item.id }}" class="form-select form-control">
+                        <option value="True" {% if item.active == True %} selected {% endif %}>فعال</option>
+                        <option value="False" {% if item.active == False %} selected {% endif %}>غیرفعال</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="text-center">
+        <button type="submit" class="btn btn-info">ثبت کنید</button>
+    </div>
+</div>
+
+

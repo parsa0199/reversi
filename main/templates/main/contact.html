@@ -1,0 +1,159 @@
+{% extends "layouts/base.html" %}
+
+{% load static %}
+
+{% block title %}
+    تماس با ما | فروشگاه اینترنتی الورول
+{% endblock title %}
+
+{% block content %}
+
+
+<main class="cart-page default ">
+    <div class="container">
+        <div class="row">
+            <div class="contact_us_content col-12 mx-auto">
+                <header class="card-header">
+                    <h3 class="card-title"><span>تماس با ما</span></h3>
+                </header>
+                <div class="account-box contact_us_page">
+                
+                    <div class="account-box-content">
+                            <form action="{% url 'main:contact' %}" method="post" class="form-account">
+
+                            {% csrf_token %}
+
+                            <div class="row">
+                                <div class="col-md-6 col-sm-12">
+                                    <div class="col-md-12 col-sm-12">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <p class="row">
+                                                    <h3>
+                                                        <strong>
+                                                             آدرس دفتر مرکزی
+                                                        </strong>
+                                                    </h3>
+                                                </p>
+                                                <ul>
+                                                    <li>
+                                                        <i class="fa fa-map  colormain" aria-hidden="true"></i>
+خیابان ایرانشهر، کوچه نوشهر، خیابان خردمند جنوبی، پلاک ۲، طبقه ۴، واحد۱۰                                                    </li>
+                                                                                         <h3>
+                                                        <strong>
+                                                             آدرس انبار
+                                                        </strong>
+                                                    </h3>
+                                                    <li>
+                                                        <i class="fa fa-map  colormain" aria-hidden="true"></i>
+                                                        میدان فردوسی، ابتدای خیابان انقلاب، بن بست شاهرود، پلاک ۱۰، واحد منفی یک
+                                                    </li>
+                                                    <li>
+                                                        <i class="fa fa-envelope colormain" aria-hidden="true"></i> info@aloroll.com
+                                                    </li>
+                                                    <li>
+                                                        <i class="fa fa-phone colormain" aria-hidden="true"></i>
+                                                       09102457573 -
+{#                                                         ۰۲۱-۵۲۷۱۷#}
+                                                        ۰۲۱-۸۷۷۰۰۴۴۷
+                                                    </li>
+                                                   
+                                                </ul>
+    
+                                                
+                                            </div>
+                                            
+
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 col-sm-12 form_send_re  ">
+                                    <div class="row">
+                                        <div class="col-md-12 col-sm-12">
+                                            <div class="form-account-title"> نام <span>(الزامی)</span></div>
+                                            <div class="form-account-row">
+                                                <input class="input_second input_all" id="name" name="name" type="text" placeholder=" نام "required>
+                                            </div>
+                                        </div>
+                      
+
+                                        <div class="col-md-12 col-sm-12">
+                                            <div class="form-account-title">ایمیل<span>(الزامی)</span></div>
+                                            <div class="form-account-row">
+                                                <input class="input_second input_all" id="email" name="email" type="text" placeholder="  ایمیل "required>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 col-sm-12">
+                                            <div class="form-account-title">تلفن<span>(اختیاری)</span></div>
+                                            <div class="form-account-row">
+                                                <input class="input_second input_all" id="phone" name="phone" type="number" placeholder="...0912">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12">
+                                            <div class="form-account-title"> موضوع پیام <span>(الزامی)</span></div>
+                                            <div class="form-account-row">
+                                                <input class="input_second input_all input_textarea text-right" rows="5"  id="subject" name="subject" placeholder=" عنوان پیام را وارد کنید"required></input>
+                                            </div>
+                                        </div>
+                                      
+                                        <div class="col-12">
+                                            <div class="form-account-title"> متن پیام <span>(الزامی)</span></div>
+                                            <div class="form-account-row">
+                                                <input class="input_second input_all input_textarea text-right" rows="5"  id="message" name="message" placeholder=" متن درخواست خود را وارد کنید"required></input>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+{#                                            <div class="form-account-agree">#}
+{#                                                <label class="checkbox-form checkbox-primary">#}
+{#                                                    <input type="checkbox" id="agree">#}
+{#                                                    <span class="checkbox-check"></span>#}
+{#                                                </label>#}
+{#                                                <label for="agree"> پاسخ به صورت پیامک به من اعلام شود</label>#}
+{#                                            </div>#}
+                                            <button  class="btn big_btn btn-main-masai" type="submit">ارسال پیام </button>
+                                        </div>
+ 
+
+                                    </div>
+                                </div>
+                                
+                               
+
+                                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3239.953298921473!2d51.420028023741004!3d35.7027668287899!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3f8e01d792357689%3A0x509b914bf94bb28!2zYWxvcm9sbCB8INin2YTZiNix2YjZhA!5e0!3m2!1sfa!2s!4v1709733686737!5m2!1sfa!2s"  style="border:0;width:100%;min-height:400px" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+
+
+                            </div>
+
+
+                            {% if success_message %}
+                            <div id="success-message" class="alert alert-success">
+                                پیام شما با موفقیت ارسال شد!
+                            </div>
+                            {% endif %}
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</main>
+
+    
+
+{% endblock %}
+
+
+{% block js %}
+<script>
+// در تابع form_valid ویو
+function showSuccessMessage() {
+    var successMessage = document.getElementById('success-message');
+    successMessage.style.display = 'block';
+}
+</script>
+{% endblock js %}

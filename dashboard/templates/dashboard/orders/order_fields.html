@@ -1,0 +1,204 @@
+<div class="modal-body">
+    <div class="row">
+        <!-- first_name field -->
+        <div class="col-lg-4 mb-3">
+            <div class="form-group">
+                <label for="first_name">*نام: </label>
+                <input type="text" class="form-control" id="first_name" name="first_name"
+                    {% if request.POST.first_name %}
+                        value="{{ request.POST.first_name|default:'_' }}"
+                    {% else %}
+                        value="{{ item.first_name }}"
+                    {% endif %}
+                >
+            </div>
+        </div>
+        
+        <!-- last_name field -->
+        <div class="col-lg-4 mb-3">
+            <div class="form-group">
+                <label for="last_name">*نام خانوادگی: </label>
+                <input type="text" class="form-control" id="last_name" name="last_name"
+                    {% if request.POST.last_name %}
+                        value="{{ request.POST.last_name|default:'_' }}"
+                    {% else %}
+                        value="{{ item.last_name }}"
+                    {% endif %}
+                >
+            </div>
+        </div>
+
+        <!-- user seller field -->
+        <div class="col-lg-4 mb-3">
+            <div class="form-group">
+                <label for="user-{{ item.id }}">*خریدار: </label>
+                <div class="col-sm m-1">
+                    <select name="user" id="user-{{ item.id }}" class="form-select form-control">
+                        {% for user in users %}
+                            <option value="{{ user.id }}" {% if item.user == user %}selected{% endif %}>
+                                {{ user }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- mobile field -->
+        <div class="col-lg-4 mb-3">
+            <div class="form-group">
+                <label for="phone">*موبایل: </label>
+                <input type="text" class="form-control" id="phone" name="phone"
+                        {% if request.POST.phone %}
+                            value="{{ request.POST.phone|default:'0' }}"
+                        {% else %}
+                            value="{{ item.phone }}"
+                        {% endif %}
+                >
+            </div>
+        </div>
+
+        <!-- is_paid field -->
+        <div class="col-lg-4 mb-3">
+            <div class="form-group">
+                <label for="is_paid-{{ item.id }}">*وضعیت پرداخت:</label>
+                <div class="col-sm">
+                    <select name="is_paid" id="is_paid-{{ item.id }}" class="form-select form-control">
+                        <option value="True" {% if item.is_paid == True %} selected {% endif %}>پرداخت شده</option>
+                        <option value="False" {% if item.is_paid == False %} selected {% endif %}>پرداخت نشده</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- shipping_status field -->
+        <div class="col-lg-4 mb-3">
+            <div class="form-group">
+                <label for="shipping_status-{{ item.id }}">*وضعیت سفارش: </label>
+                <div class="col-sm m-1">
+                    <select name="shipping_status" id="shipping_status-{{ item.id }}" class="form-select form-control">
+                        {% for shipping_status in shipping_status_list %}
+                            <option value="{{ shipping_status.0 }}" {% if item.shipping_status == shipping_status.0 %}selected{% endif %}>
+                                {{ shipping_status.1 }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- delivery_option field -->
+        <div class="col-lg-4 mb-3">
+            <div class="form-group">
+                <label for="delivery_option-{{ item.id }}">*روش ارسال: </label>
+                <div class="col-sm m-1">
+                    <select name="delivery_option" id="delivery_option-{{ item.id }}" class="form-select form-control">
+                        {% for delivery_option in delivery_option_list %}
+                            <option value="{{ delivery_option.0 }}" {% if item.delivery_option == delivery_option.0 %}selected{% endif %}>
+                                {{ delivery_option.1 }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- send_date field -->
+        <div class="col-lg-4 mb-3">
+            <div class="form-group">
+                <label for="send_date">زمان ارسال:</label>
+                <input id="send-date-{{ item.id }}" name="send_date" data-jdp
+                       placeholder="{{ item.send_date }}"
+                       value="{{ item.send_date }}"
+                       class="tw-w-full tw-rounded-md tw-p-2 inputspage1 form-control" type="text"
+                />
+            
+            </div>
+        </div>
+
+        <!-- total_price field -->
+        <div class="col-lg-4 mb-3">
+            <div class="form-group">
+                <label for="total_price">*مبلغ پرداختی: </label>
+                <input type="number" class="form-control" id="total_price" name="total_price"
+                    {% if request.POST.total_price_after_discount %}
+                        value="{{ request.POST.total_price|default:'0' }}"
+                    {% else %}
+                        value="{{ item.total_price }}"
+                    {% endif %}
+                >
+            </div>
+        </div>
+
+        <!-- total_price_after_discount field -->
+        <div class="col-lg-4 mb-3">
+            <div class="form-group">
+                <label for="total_price_after_discount">*مبلغ پرداختی بعد از تخفیف: </label>
+                <input type="number" class="form-control" id="total_price_after_discount" name="total_price_after_discount"
+                    {% if request.POST.total_price_after_discount %}
+                        value="{{ request.POST.total_price_after_discount|default:'0' }}"
+                    {% else %}
+                        value="{{ item.total_price_after_discount }}"
+                    {% endif %}
+                >
+            </div>
+        </div>
+
+        <!-- discount_price field -->
+        <div class="col-lg-4 mb-3">
+            <div class="form-group">
+                <label for="discount_price">*مبلغ تخفیف: </label>
+                <input type="number" class="form-control" id="discount_price" name="discount_price"
+                    {% if request.POST.discount_price %}
+                        value="{{ request.POST.discount_price|default:'0' }}"
+                    {% else %}
+                        value="{{ item.discount_price }}"
+                    {% endif %}
+                >
+            </div>
+        </div>
+        
+        <!-- delivery_cost field -->
+        <div class="col-lg-4 mb-3">
+            <div class="form-group">
+                <label for="delivery_cost">*هزینه ارسال: </label>
+                <input type="number" class="form-control" id="delivery_cost" name="delivery_cost"
+                    {% if request.POST.delivery_cost %}
+                        value="{{ request.POST.delivery_cost|default:'0' }}"
+                    {% else %}
+                        value="{{ item.delivery_cost }}"
+                    {% endif %}
+                >
+            </div>
+        </div>
+
+        <!-- address field -->
+        <div class="col-lg-6 mb-3">
+            <div class="form-group">
+                <label for="address-{{ item.id }}">*آدرس: </label>
+                <div class="col-sm m-1">
+                    <select name="address" id="address-{{ item.id }}" class="form-select form-control">
+                        {% for address in address_list %}
+                            <option value="{{ address.id }}" {% if item.address == address %}selected{% endif %}>
+                                {{ address }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- additional field -->
+        <div class="col-lg-6 mb-3">
+            <div class="form-group">
+                <label for="additional">توضیحات: </label>
+                <textarea name="additional" class="form-control" id="additional"  cols="30" rows="10">{% if request.POST.additional %}{{ request.POST.additional|default:'_' }}{% else %}{{ item.additional }}{% endif %}</textarea>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="text-center">
+        <button type="submit" class="btn btn-info">ثبت کنید</button>
+    </div>
+</div>

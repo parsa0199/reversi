@@ -1,0 +1,191 @@
+{% load static %}
+{% load thumbnail %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>
+        {% block title %} {% endblock title %} | پنل مدیریت الورول
+    </title>
+    <!-- Meta -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <link rel="canonical" href="">
+
+    <meta name="description" content="." />
+    <meta name="keywords" content="" />
+    <meta name="author" content="CodedThemes" />
+
+    <!-- Favicon icon -->
+    <link rel="icon" href="{{ site.fav_icon.url }}" type="image/x-icon">
+    <!-- fontawesome icon -->
+    <link rel="stylesheet" href="{% static 'dashboard/fonts/fontawesome/css/fontawesome-all.min.css' %}">
+    <!-- animation css -->
+    <link rel="stylesheet" href="{% static 'dashboard/plugins/animation/css/animate.min.css' %}">
+    <!-- vendor css -->
+    <link rel="stylesheet" href="{% static 'dashboard/css/style.css' %}">
+    <!-- RTL layouts -->
+    <link rel="stylesheet" href="{% static 'dashboard/css/layouts/rtl.css' %}">
+    <link rel="stylesheet" href="{% static 'dashboard/fonts/custom/iranSans/index.css' %}">
+    <link rel="stylesheet" href="{% static 'dashboard/css/customStyles.css' %}">
+
+    <!-- Notification css -->
+    <link rel="stylesheet" href="{% static 'dashboard/plugins/notification/notification.min.css' %}">
+
+    <!-- data tables -->
+    <link rel="stylesheet" href="{% static 'dashboard/css/management/datatables.min.css' %}">
+    <link rel="stylesheet" href="{% static 'dashboard/css/management/style.css' %}">
+
+    <link rel="stylesheet" href="{% static 'dashboard/css/my_dashboard.css' %}">
+    <!-- Specific CSS goes HERE -->
+
+    <!-- Specific CSS goes HERE -->
+
+    <!-- select2  for searchabale selectable input -->
+    <link href="{% static 'dashboard/plugins/select2/select2.min.css' %}" rel="stylesheet" />
+
+    <!-- jalalidatepicker input -->
+    <link rel="stylesheet" href="{% static 'dashboard/plugins/jalalidatepicker/jalalidatepicker.min.css' %}">
+
+
+    {% block stylesheets %}{% endblock stylesheets %}
+    <script src="
+https://cdn.jsdelivr.net/npm/jalaali-js@1.2.7/dist/jalaali.min.js
+"></script>
+</head>
+
+<body {% if not request.user.is_superuser %} {% endif %}>
+
+<!-- [ Pre-loader ] start -->
+<div class="loader-bg">
+    <div class="loader-track">
+        <div class="loader-fill"></div>
+    </div>
+</div>
+
+
+<!-- SideBar -->
+<div class="py-4 bg-light px-3 d-block d-lg-none">
+    <div class="row justify-content-between">
+        <div class="col-6 align-self-center">
+            <a href="#" id="open-mobile-collapse" class="m-0 p-0 d-flex">
+                <span class="feather icon-menu align-self-center font-25 text-dark mr-1"></span>
+            </a>
+        </div>
+
+        <div class="col-6 align-self-center">
+            <div class="d-flex justify-content-end ml-1">
+                <a href="/">
+                    <img  class="logo" src="{{ site.large_logo_light.url }}" loading="lazy"
+                          alt="{{ site.title }}" style="width:80px">
+                </a>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% include 'dashboard/includes/sidebar.html' %}
+
+<div class="pcoded-main-container">
+    <div class="pcoded-wrapper">
+
+        <div class="pcoded-content">
+            <div class="pcoded-inner-content">
+                <!-- [ list name ] start -->
+                <div class="page-header">
+                    <div class="page-block my-2">
+                        <div class="row align-items-center justify-content-between">
+                            <div class="col-lg-9 col-md-11 col-11 mt-lg-0">
+                                <div class="page-header-title">
+
+                                </div>
+                                <ul class="breadcrumb">
+                                    <li class="breadcrumb-item"><a href="{% url 'dashboard:home' %}"><i class="fas fa-tachometer-alt ml-1"></i>داشبورد</a></li>
+
+                                    {% block breadcrumb %}
+
+                                    {% endblock breadcrumb %}
+                                </ul>
+                            </div>
+
+                            <div class="col-lg-3 col-md-1 col-1 align-self-start">
+
+                                <div class="dropdown float-right mb-2">
+                                    <a dir="rtl" href="#" class="dropdown-toggle d-flex text-dark"
+                                       data-toggle="dropdown">
+                                        <div class="">
+                                            {% if request.user.organization.image %}
+
+                                                {% thumbnail request.user.organization.image "100x100" as im %}
+                                                    <img src="{{ im.url }}" class="img-radius shadow-sm" width="35"
+                                                         loading="lazy" alt="">
+                                                {% endthumbnail %}
+
+                                            {% else %}
+                                                <i class="feather icon-user font-18"></i>
+                                            {% endif %}
+                                        </div>
+                                        <div class="px-2 d-none d-lg-block">
+                                            خوش آمدید,
+                                            {{request.user.username}}
+                                        </div>
+                                    </a>
+                                    <div class="dropdown-menu mt-2 py-3 px-2 shadow">
+                                        <a  target="_blank"
+                                            class="dropdown-item d-flex px-2 font-14 text-dark">
+                                            {{ request.user.get_full_name }}</a>
+
+                                        <hr class="my-2">
+
+
+                                        {% if request.user.is_superuser %}
+                                            <a href="{% url 'admin:index' %}" target="_blank"
+                                               class="dropdown-item d-flex px-2 py-2 mb-2 font-14 text-dark">
+                                                <i class="feather icon-airplay align-self-center ml-1"></i>
+                                                پنل ادمین</a>
+                                        {% endif %}
+                                        <a href="{% url 'accounts:logout' %}"
+                                           class="dropdown-item d-flex px-2 py-2 font-14 text-danger">
+                                            <i class="feather icon-log-out align-self-center ml-1"></i>
+                                            خروج از سایت</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="mb-3 mb-lg-0"></div>
+
+                    {#<button type="button" class="btn btn-warning rounded " data-toggle="modal" data-target="#infoModal">#}
+                    {#  <i class=" fas fa-lightbulb"></i>#}
+                    {#</button>#}
+
+                    {% block content %}{% endblock content %}
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <p class="text-center w-100" dir="rtl" style="position:absolute; bottom:0">
+        &copy;
+        <a href="/" class="text-dark">{{ site.title }}</a> |
+        ساخته شده توسط <a href="https://sdata.ir">Sdata.ir</a>
+    </p>
+</div>
+
+
+{% include 'dashboard/includes/scripts.html' %}
+
+{% block javascripts %}
+{% endblock javascripts %}
+<!-- Specific Page JS goes HERE  -->
+
+
+
+
+</body>
+
+</html>
