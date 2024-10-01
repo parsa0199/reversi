@@ -1,4 +1,28 @@
-# E Project
+# reversi Project by parsa
+# Version History
+
+## [1.1.0] - 2024-10-02
+### Added
+- Show correct cells after losing in hard mode.
+- Add different difficulties and different time limits.
+- Added  CSS for responsive styling.
+
+### Changed
+- Use ORM for game object.
+- add custom logics to game like timer .
+
+### Fixed
+- Corrected an issue with overing game.
+- Fixed a bug where user profiles were not being saved properly.
+
+---
+
+## [1.0.0] - 2024-10-01
+### Initial Release
+- Basic project setup with Django.
+- Play game on one device .
+
+
 A project with Django and Bootstarp technologies.
 
 <br>

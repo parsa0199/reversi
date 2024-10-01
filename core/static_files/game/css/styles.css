@@ -166,3 +166,6 @@ footer p {
     margin: 0;
     color: #282c34;
 }
+.cell.highlight {
+    background-color: green; /* Highlight color for valid moves */
+}
