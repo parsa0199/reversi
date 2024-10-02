@@ -208,17 +208,51 @@ h1 {
 
 /* Add a bouncing effect when a cell is clicked */
 .cell:active {
-    animation: bounce 22.4s; /* Adjusted duration */
+    animation: bounce 9.4s; /* Adjusted duration */
 }
 
 
 
 
 
+/* General styles for player info container */
 .player-info {
-    font-size: 1.5em; /* Reduced font size */
-    margin: 10px;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    display: flex; /* Use flexbox for layout */
+    align-items: center; /* Center items vertically */
+    justify-content: space-between; /* Space between player labels and times */
+    padding: 10px; /* Add some padding */
+    background-color: #061238; /* Light background color */
+    border: 0.1em solid #000000; /* Dark border for contrast */
+    border-radius: 8px; /* Rounded corners */
+    margin: 10px 0; /* Space between player info sections */
+    font-family: 'Arial', sans-serif; /* Font style */
+    font-size: 1.2em; /* Font size */
+    color: #ffffff; /* Dark text color */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+/* Styles for player labels */
+.player-info span:first-child {
+    font-weight: bold; /* Make player labels bold */
+}
+
+/* Styles for player time display */
+.player-info span:last-child {
+    font-weight: bold; /* Make time bold */
+    color: #c8fffa; /* Blue color for time */
+    padding: 5px 10px; /* Padding for time display */
+    border: 1px solid #236885; /* Border to match time color */
+    border-radius: 5px; /* Rounded corners for time display */
+    background-color: rgba(0, 123, 255, 0.1); /* Light blue background for emphasis */
+    margin-left: 0.2em;
+    margin-right: 0.2em;
+}
+/* Container for player info */
+.player-info-container {
+    display: flex; /* Use flexbox to align items in a row */
+    justify-content: space-around; /* Space out items evenly */
+    align-items: center; /* Center items vertically */
+    padding: 10px; /* Add padding to the container */
 }
 
 #info {
