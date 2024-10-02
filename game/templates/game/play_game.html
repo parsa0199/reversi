@@ -24,30 +24,25 @@
     </div>
 
     <div id="info">
-        <div class="player-info">
-            <span>Black Player: </span>
-            <span id="black-time">00:00</span>
-        </div>
-        <div class="player-info">
-            <span>White Player: </span>
-            <span id="white-time">00:00</span>
-        </div>
 
+        <!-- Audio elements -->
 
+        <audio id="blackMoveSound" src="{% static 'game/button.mp3' %}" preload="auto"></audio>
+        <audio id="whiteMoveSound" src="{% static 'game/chess.mp3' %}" preload="auto"></audio>
 
         <p>Move Count: <span id="move-count">0</span></p>
-                    <p>Current Player: <span id="current-player">
+        <p>Current Player: <span id="current-player">
         </span></p>
     </div>
-        <div id="player-piece" class="cell black"></div>
+    <div id="player-piece" class="cell black"></div>
 
     <div id="board">
-        
+
     </div>
 </main>
 
 <footer>
-<p>&copy; 2024 Reversi Game. All rights reserved for Parsa0199.</p>
+    <p>&copy; 2024 Reversi Game. All rights reserved for Parsa0199.</p>
 </footer>
 <script src="{% static 'game/js/script.js' %}"></script>
 </body>

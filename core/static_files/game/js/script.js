@@ -3,6 +3,8 @@ const currentPlayerElement = document.getElementById('current-player');
 const blackTimeElement = document.getElementById('black-time');
 const whiteTimeElement = document.getElementById('white-time');
 const moveCountElement = document.getElementById('move-count');
+const blackMoveSound = document.getElementById('blackMoveSound');;
+const whiteMoveSound = document.getElementById('whiteMoveSound');;
 
 let board = [];
 let currentPlayer = 'black';
@@ -70,6 +72,14 @@ function handleCellClick(row, col) {
     moveCount++; // Increment move count
     moveCountElement.textContent = moveCount; // Update move count display
     flipPieces(row, col);
+
+    // Play sound effect based on current player
+    if (currentPlayer === 'black') {
+        blackMoveSound.play(); // Play black's move sound
+    } else {
+        whiteMoveSound.play(); // Play white's move sound
+    }
+
     switchPlayer();
 
     // Check if the game is over after the move

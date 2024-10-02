@@ -140,6 +140,7 @@ h1 {
         0 8px 20px rgba(255, 255, 255, 0.8), /* Strong shadow */
         inset 0 4px 8px rgba(255, 255, 255, 0.3), /* Inner shadow for depth */
         inset 0 2px 5px rgba(0, 0, 0, 0.2); /* Light inner highlight */
+
     border: 2px solid #eee; /* Subtle border */
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
@@ -162,23 +163,56 @@ h1 {
         inset 0 0 15px rgba(255, 255, 255, 0.4); /* Strong inner glow */
 }
 
-/* Keyframe animations for a bouncing effect */
+/* Keyframe animations for a bouncing effect with artistic transformations and color changes */
 @keyframes bounce {
-    0% {
-        transform: translateY(0);
+    5% {
+        transform: translateX(0) rotate(0deg) scale(1) skew(0deg, 0deg);
+        background-color: #8eec9b; /* Initial color */
     }
-    50% {
-        transform: translateY(-5px);
+
+
+    10% {
+        transform: translateX(-5.3em) rotate(6deg) scale(1.04) skew(0deg, 0deg);
+        background-color: #12cfd5; /* Change to orange */
     }
-    100% {
-        transform: translateY(0);
+
+    15% {
+        transform: translateX(-5em) rotate(9deg) scale(1.06) skew(0deg, 0deg);
+        background-color: #0331c2; /* Change to orange */
     }
+
+    30% {
+        transform: translateX(-5.65em) rotate(12deg) scale(1.08) skew(0deg, 0deg);
+        background-color: #3f15a9; /* Change to orange */
+    }
+
+    45% {
+        transform: translateX(-5.3em) rotate(15deg) scale(1.1) skew(10deg, 10deg);
+        background-color: #5d0a8d; /* Change to orange */
+    }
+
+    60% {
+        transform: translateX(-5.65em) rotate(12deg) scale(1.08) skew(0deg, 0deg);
+        background-color: #8c084a; /* Change to pink */
+    }
+
+    75% {
+        transform: translateX(-5em) rotate(9deg) scale(1.06) skew(0deg, 0deg);
+        background-color: #ea0505; /* Change to pink */
+    }
+
+
+
+
 }
 
 /* Add a bouncing effect when a cell is clicked */
 .cell:active {
-    animation: bounce 0.2s; /* Bouncing effect */
+    animation: bounce 22.4s; /* Adjusted duration */
 }
+
+
+
 
 
 .player-info {
